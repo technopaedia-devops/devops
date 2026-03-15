@@ -1,96 +1,996 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Technopaedia — DevOps & Cloud Consultancy</title>
-  <meta name="description" content="Technopaedia — Consultancy and training for DevOps engineering and cloud computing." />
-  <link rel="stylesheet" href="assets/css/styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Technopaedia | Master DevOps & Cloud Computing</title>
+    <meta name="description" content="Technopaedia LTD - Premier DevOps and Cloud Computing Training Platform.">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Space Grotesk', 'sans-serif'],
+                    },
+                    colors: {
+                        tech: {
+                            dark: '#0a0e27',
+                            darker: '#050817',
+                            primary: '#00d4ff',
+                            secondary: '#7000ff',
+                            accent: '#ff006e',
+                            success: '#00ff88',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: #0a0e27; }
+        ::-webkit-scrollbar-thumb { background: #00d4ff; border-radius: 5px; }
+        
+        .glass {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .glass-dark {
+            background: rgba(10, 14, 39, 0.9);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .text-gradient {
+            background: linear-gradient(135deg, #00d4ff 0%, #7000ff 50%, #ff006e 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .bg-grid {
+            background-image: 
+                linear-gradient(rgba(0, 212, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 212, 255, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+        }
+
+        .nav-link { position: relative; }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -4px;
+            left: 0;
+            background: linear-gradient(90deg, #00d4ff, #7000ff);
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover::after { width: 100%; }
+
+        .course-card {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .course-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 212, 255, 0.2);
+        }
+
+        .loader {
+            border: 3px solid rgba(255,255,255,0.1);
+            border-radius: 50%;
+            border-top: 3px solid #00d4ff;
+            width: 24px;
+            height: 24px;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .typing-cursor::after {
+            content: '|';
+            animation: blink 1s infinite;
+        }
+        
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        #particles-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 100;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.8);
+            backdrop-filter: blur(5px);
+        }
+
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 16px 24px;
+            border-radius: 12px;
+            color: white;
+            font-weight: 500;
+            z-index: 1000;
+            transform: translateX(400px);
+            transition: transform 0.3s ease;
+        }
+
+        .toast.show {
+            transform: translateX(0);
+        }
+
+        .toast.success { background: linear-gradient(135deg, #00ff88, #00d4ff); }
+        .toast.error { background: linear-gradient(135deg, #ff006e, #7000ff); }
+    </style>
 </head>
-<body>
-  <header class="site-header">
-    <div class="container nav-row">
-      <a class="brand" href="index.html">Technopaedia</a>
-      <button id="navToggle" class="nav-toggle" aria-expanded="false">☰</button>
-      <nav class="main-nav" id="mainNav">
-        <a href="services.html">Services</a>
-        <a href="training.html">Training</a>
-        <a href="about.html">About</a>
-        <a href="contact.html" class="cta">Contact</a>
-      </nav>
-    </div>
-  </header>
+<body class="bg-tech-darker text-white font-sans overflow-x-hidden">
 
-  <main>
-    <section class="hero">
-      <div class="container hero-grid">
-        <div class="hero-copy">
-          <h1>DevOps & Cloud Engineering consultancy and training</h1>
-          <p>We help engineering teams modernize infrastructure, automate delivery, and scale on cloud platforms — with hands-on training and expert consultancy.</p>
-          <p class="hero-cta">
-            <a href="services.html" class="btn">Our Services</a>
-            <a href="training.html" class="btn btn-outline">Training Programs</a>
-          </p>
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 glass-dark transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <div class="flex-shrink-0 flex items-center gap-3 cursor-pointer" onclick="window.location.href='index.html'">
+                    <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-tech-primary to-tech-secondary flex items-center justify-center glow">
+                        <i class="fas fa-cloud text-white text-xl"></i>
+                    </div>
+                    <div>
+                        <h1 class="font-display font-bold text-2xl tracking-tight">Technopaedia</h1>
+                        <p class="text-xs text-gray-400 tracking-widest uppercase">LTD</p>
+                    </div>
+                </div>
+
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="index.html" class="nav-link text-tech-primary font-medium text-sm">Home</a>
+                    <a href="about.html" class="nav-link text-gray-300 hover:text-white transition-colors text-sm font-medium">About</a>
+                    <a href="services.html" class="nav-link text-gray-300 hover:text-white transition-colors text-sm font-medium">Services</a>
+                    <a href="training.html" class="nav-link text-gray-300 hover:text-white transition-colors text-sm font-medium">Training</a>
+                    <a href="contact.html" class="nav-link text-gray-300 hover:text-white transition-colors text-sm font-medium">Contact</a>
+                </div>
+
+                <div class="hidden md:flex items-center space-x-4">
+                    <button onclick="toggleSearch()" class="text-gray-300 hover:text-white transition-colors">
+                        <i class="fas fa-search"></i>
+                    </button>
+                    <a href="training.html" class="px-6 py-2.5 rounded-full bg-gradient-to-r from-tech-primary to-tech-secondary text-white font-semibold text-sm hover:shadow-lg hover:shadow-tech-primary/30 transition-all transform hover:scale-105">
+                        Get Started
+                    </a>
+                </div>
+
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-btn" class="text-gray-300 hover:text-white focus:outline-none">
+                        <i class="fas fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
         </div>
-        <div class="hero-image">
-          <img src="assets/images/hero-illustration.svg" alt="DevOps illustration" />
+
+        <div id="mobile-menu" class="hidden md:hidden glass-dark border-t border-gray-800">
+            <div class="px-4 pt-2 pb-6 space-y-2">
+                <a href="index.html" class="block px-3 py-2 rounded-md text-base font-medium text-tech-primary bg-white/5">Home</a>
+                <a href="about.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-white/5">About</a>
+                <a href="services.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-white/5">Services</a>
+                <a href="training.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-white/5">Training</a>
+                <a href="contact.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-white/5">Contact</a>
+            </div>
         </div>
-      </div>
-    </section>
+    </nav>
 
-    <section class="features container">
-      <h2>What we do</h2>
-      <div class="grid-3">
-        <article class="card">
-          <h3>DevOps Transformation</h3>
-          <p>CI/CD, GitOps, pipeline optimization, observability, and release engineering to shorten feedback loops and increase reliability.</p>
-        </article>
-        <article class="card">
-          <h3>Cloud Architecture</h3>
-          <p>Design secure, cost-efficient cloud architectures on AWS, Azure, or GCP with automation and best practices.
-          </p>
-        </article>
-        <article class="card">
-          <h3>Training & Workshops</h3>
-          <p>Hands-on workshops, certification prep, and tailored training for engineers and teams — delivered remotely or on-site.</p>
-        </article>
-      </div>
-    </section>
-
-    <section class="testimonial container">
-      <blockquote>
-        "Technopaedia helped us adopt GitOps and reduced our deployment time by 75%. Their training made our whole team confident in modern cloud patterns."
-        <cite>— CTO, Acme Corp</cite>
-      </blockquote>
-    </section>
-
-    <section class="contact-cta container">
-      <h2>Ready to modernize your engineering?</h2>
-      <p>Book a free 30-minute consultation to discuss your goals and a suggested roadmap.</p>
-      <p><a href="contact.html" class="btn">Request a Consultation</a></p>
-    </section>
-  </main>
-
-  <footer class="site-footer">
-    <div class="container footer-grid">
-      <div>
-        <strong>Technopaedia</strong>
-        <p>Consultancy & Training — DevOps, Cloud, Automation</p>
-      </div>
-      <div>
-        <nav>
-          <a href="services.html">Services</a> ·
-          <a href="training.html">Training</a> ·
-          <a href="about.html">About</a> ·
-          <a href="contact.html">Contact</a>
-        </nav>
-      </div>
-      <div>
-        <small>© <span id="year"></span> Technopaedia — All rights reserved.</small>
-      </div>
+    <!-- Search Modal -->
+    <div id="search-modal" class="modal" onclick="if(event.target === this) toggleSearch()">
+        <div class="glass p-8 rounded-2xl w-full max-w-2xl mx-4 border border-gray-700">
+            <div class="flex items-center gap-4 mb-6">
+                <i class="fas fa-search text-tech-primary text-xl"></i>
+                <input type="text" id="search-input" placeholder="Search courses, topics, or resources..." 
+                       class="w-full bg-transparent text-white text-xl focus:outline-none placeholder-gray-500"
+                       onkeyup="handleSearch(event)">
+                <button onclick="toggleSearch()" class="text-gray-400 hover:text-white">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            <div id="search-results" class="space-y-3 max-h-96 overflow-y-auto">
+                <p class="text-gray-500 text-center">Type at least 2 characters...</p>
+            </div>
+        </div>
     </div>
-  </footer>
 
-  <script src="assets/js/main.js"></script>
+    <!-- Hero Section -->
+    <section id="home" class="relative min-h-screen flex items-center justify-center overflow-hidden bg-grid">
+        <div class="absolute inset-0 bg-gradient-to-b from-tech-darker via-tech-dark to-tech-darker opacity-90"></div>
+        <div class="absolute top-0 left-1/4 w-96 h-96 bg-tech-primary/20 rounded-full blur-3xl animate-pulse"></div>
+        <div class="absolute bottom-0 right-1/4 w-96 h-96 bg-tech-secondary/20 rounded-full blur-3xl animate-pulse" style="animation-delay: 2s;"></div>
+        
+        <canvas id="particles-canvas"></canvas>
+
+        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20">
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <div data-aos="fade-right" data-aos-duration="1000">
+                    <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass mb-6 border border-tech-primary/30 cursor-pointer hover:border-tech-primary transition-colors" onclick="showToast('New cohort starting Monday!', 'success')">
+                        <span class="w-2 h-2 rounded-full bg-tech-success animate-pulse"></span>
+                        <span class="text-sm font-medium text-tech-primary">Now Enrolling: Cloud Mastery Bootcamp</span>
+                    </div>
+                    
+                    <h1 class="font-display text-5xl md:text-7xl font-bold leading-tight mb-6">
+                        Master <span class="text-gradient">DevOps</span> &<br>
+                        Cloud <span class="text-gradient typing-cursor" id="typing-text">Computing</span>
+                    </h1>
+                    
+                    <p class="text-xl text-gray-400 mb-8 max-w-lg leading-relaxed">
+                        Transform your career with hands-on training in AWS, Azure, Kubernetes, and CI/CD pipelines. Join 10,000+ engineers who launched their cloud careers with Technopaedia.
+                    </p>
+                    
+                    <div class="flex flex-col sm:flex-row gap-4 mb-12">
+                        <a href="training.html" class="px-8 py-4 rounded-full bg-gradient-to-r from-tech-primary to-tech-secondary text-white font-bold text-lg hover:shadow-xl hover:shadow-tech-primary/30 transition-all transform hover:scale-105 text-center group">
+                            Explore Courses
+                            <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i>
+                        </a>
+                        <button onclick="openVideoModal()" class="px-8 py-4 rounded-full glass text-white font-bold text-lg hover:bg-white/10 transition-all border border-white/20 text-center flex items-center justify-center gap-2 group">
+                            <i class="fas fa-play-circle group-hover:scale-110 transition-transform"></i>
+                            Watch Demo
+                        </button>
+                    </div>
+
+                    <div class="grid grid-cols-3 gap-8 pt-8 border-t border-gray-800">
+                        <div class="text-center sm:text-left">
+                            <div class="text-3xl font-bold text-white mb-1 counter" data-target="10000">0</div>
+                            <div class="text-sm text-gray-500">Students</div>
+                        </div>
+                        <div class="text-center sm:text-left">
+                            <div class="text-3xl font-bold text-white mb-1 counter" data-target="98">0</div>
+                            <div class="text-sm text-gray-500">% Placement Rate</div>
+                        </div>
+                        <div class="text-center sm:text-left">
+                            <div class="text-3xl font-bold text-white mb-1 counter" data-target="50">0</div>
+                            <div class="text-sm text-gray-500">Courses</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="relative" data-aos="fade-left" data-aos-duration="1000" data-aos-delay="200">
+                    <div class="relative z-10 animate-[float_6s_ease-in-out_infinite]">
+                        <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=800&h=600&fit=crop" 
+                             alt="DevOps Training" 
+                             class="rounded-2xl shadow-2xl shadow-tech-primary/20 w-full object-cover h-[500px]">
+                        
+                        <div class="absolute -left-8 top-1/4 glass p-4 rounded-xl border border-tech-primary/30 animate-[float_6s_ease-in-out_infinite]" style="animation-delay: 1s;">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-full bg-tech-success/20 flex items-center justify-center">
+                                    <i class="fas fa-check text-tech-success"></i>
+                                </div>
+                                <div>
+                                    <div class="text-sm font-bold">Certified</div>
+                                    <div class="text-xs text-gray-400">AWS & Azure</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="absolute -right-4 bottom-1/4 glass p-4 rounded-xl border border-tech-secondary/30 animate-[float_6s_ease-in-out_infinite]" style="animation-delay: 2s;">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-full bg-tech-secondary/20 flex items-center justify-center">
+                                    <i class="fas fa-users text-tech-secondary"></i>
+                                </div>
+                                <div>
+                                    <div class="text-sm font-bold">Live Classes</div>
+                                    <div class="text-xs text-gray-400">Interactive</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="absolute -z-10 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-gradient-to-r from-tech-primary/20 to-tech-secondary/20 rounded-full blur-3xl"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+            <a href="#courses" class="text-gray-400 hover:text-white transition-colors">
+                <i class="fas fa-chevron-down text-2xl"></i>
+            </a>
+        </div>
+    </section>
+
+    <!-- Trusted By Section -->
+    <section class="py-12 border-y border-gray-800 bg-tech-dark/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <p class="text-center text-gray-500 text-sm uppercase tracking-widest mb-8">Trusted by engineers at</p>
+            <div class="flex flex-wrap justify-center items-center gap-12 opacity-50 grayscale hover:grayscale-0 transition-all duration-500" id="logo-scroll">
+                <i class="fab fa-aws text-4xl hover:text-[#FF9900] transition-colors cursor-pointer" title="Amazon Web Services"></i>
+                <i class="fab fa-microsoft text-4xl hover:text-[#00A4EF] transition-colors cursor-pointer" title="Microsoft Azure"></i>
+                <i class="fab fa-google text-4xl hover:text-[#4285F4] transition-colors cursor-pointer" title="Google Cloud"></i>
+                <i class="fab fa-docker text-4xl hover:text-[#2496ED] transition-colors cursor-pointer" title="Docker"></i>
+                <i class="fab fa-kubernetes text-4xl hover:text-[#326CE5] transition-colors cursor-pointer" title="Kubernetes"></i>
+                <i class="fab fa-jenkins text-4xl hover:text-[#D24939] transition-colors cursor-pointer" title="Jenkins"></i>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Courses Preview -->
+    <section id="courses" class="py-24 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <h2 class="font-display text-4xl md:text-5xl font-bold mb-4">Featured <span class="text-gradient">Courses</span></h2>
+                <p class="text-gray-400 text-lg max-w-2xl mx-auto">Industry-aligned curriculum designed by cloud architects and DevOps engineers.</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8" id="featured-courses">
+                <!-- Populated by JS -->
+            </div>
+
+            <div class="text-center mt-12">
+                <a href="training.html" class="inline-flex items-center gap-2 px-8 py-4 rounded-full glass border border-tech-primary/30 text-tech-primary hover:bg-tech-primary hover:text-tech-dark transition-all font-semibold text-lg group">
+                    View All Courses
+                    <i class="fas fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Features Section -->
+    <section id="features" class="py-24 bg-tech-dark/30 relative overflow-hidden">
+        <div class="absolute inset-0 bg-grid opacity-30"></div>
+        
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid lg:grid-cols-2 gap-16 items-center">
+                <div data-aos="fade-right">
+                    <h2 class="font-display text-4xl md:text-5xl font-bold mb-6">Why Choose <span class="text-gradient">Technopaedia</span>?</h2>
+                    <p class="text-gray-400 text-lg mb-8">We don't just teach theory. Our hands-on labs prepare you for production environments.</p>
+                    
+                    <div class="space-y-4" id="features-accordion">
+                        <div class="glass rounded-xl border border-gray-800 overflow-hidden cursor-pointer group" onclick="toggleFeature(0)">
+                            <div class="p-6 flex items-center justify-between">
+                                <div class="flex items-center gap-4">
+                                    <div class="w-12 h-12 rounded-xl bg-tech-primary/10 flex items-center justify-center border border-tech-primary/30 group-hover:bg-tech-primary/20 transition-colors">
+                                        <i class="fas fa-laptop-code text-tech-primary text-xl"></i>
+                                    </div>
+                                    <h3 class="text-xl font-bold">Hands-On Labs</h3>
+                                </div>
+                                <i class="fas fa-chevron-down transition-transform duration-300" id="feature-icon-0"></i>
+                            </div>
+                            <div class="px-6 pb-6 hidden text-gray-400" id="feature-content-0">
+                                Practice in live cloud environments with real AWS/Azure accounts provided. Deploy actual infrastructure, break things, and learn to fix them safely.
+                            </div>
+                        </div>
+
+                        <div class="glass rounded-xl border border-gray-800 overflow-hidden cursor-pointer group" onclick="toggleFeature(1)">
+                            <div class="p-6 flex items-center justify-between">
+                                <div class="flex items-center gap-4">
+                                    <div class="w-12 h-12 rounded-xl bg-tech-secondary/10 flex items-center justify-center border border-tech-secondary/30 group-hover:bg-tech-secondary/20 transition-colors">
+                                        <i class="fas fa-certificate text-tech-secondary text-xl"></i>
+                                    </div>
+                                    <h3 class="text-xl font-bold">Certification Ready</h3>
+                                </div>
+                                <i class="fas fa-chevron-down transition-transform duration-300" id="feature-icon-1"></i>
+                            </div>
+                            <div class="px-6 pb-6 hidden text-gray-400" id="feature-content-1">
+                                Curriculum aligned with official AWS, Azure, and Kubernetes exams. Includes practice tests and exam vouchers for qualified students.
+                            </div>
+                        </div>
+
+                        <div class="glass rounded-xl border border-gray-800 overflow-hidden cursor-pointer group" onclick="toggleFeature(2)">
+                            <div class="p-6 flex items-center justify-between">
+                                <div class="flex items-center gap-4">
+                                    <div class="w-12 h-12 rounded-xl bg-tech-accent/10 flex items-center justify-center border border-tech-accent/30 group-hover:bg-tech-accent/20 transition-colors">
+                                        <i class="fas fa-users-cog text-tech-accent text-xl"></i>
+                                    </div>
+                                    <h3 class="text-xl font-bold">Expert Mentors</h3>
+                                </div>
+                                <i class="fas fa-chevron-down transition-transform duration-300" id="feature-icon-2"></i>
+                            </div>
+                            <div class="px-6 pb-6 hidden text-gray-400" id="feature-content-2">
+                                Learn from engineers who built systems at Netflix, Amazon, and Google. Weekly office hours and 1-on-1 mentoring sessions included.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="relative" data-aos="fade-left">
+                    <div class="relative rounded-2xl overflow-hidden shadow-2xl shadow-tech-primary/20">
+                        <img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?w=800&h=600&fit=crop" 
+                             alt="Learning Platform" class="w-full">
+                        <div class="absolute inset-0 bg-gradient-to-t from-tech-darker/80 to-transparent"></div>
+                        <div class="absolute bottom-6 left-6 right-6">
+                            <div class="glass p-4 rounded-xl border border-tech-primary/30">
+                                <div class="flex items-center justify-between mb-2">
+                                    <span class="text-sm font-medium">Course Progress</span>
+                                    <span class="text-sm text-tech-primary" id="progress-text">0%</span>
+                                </div>
+                                <div class="w-full bg-gray-700 rounded-full h-2 overflow-hidden">
+                                    <div class="bg-gradient-to-r from-tech-primary to-tech-secondary h-2 rounded-full transition-all duration-1000" 
+                                         style="width: 0%" id="progress-bar"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="absolute -bottom-6 -left-6 glass p-6 rounded-xl border border-tech-primary/30 shadow-lg shadow-tech-primary/20">
+                        <div class="flex items-center gap-4">
+                            <div class="w-16 h-16 rounded-full bg-gradient-to-br from-tech-primary to-tech-secondary flex items-center justify-center text-2xl font-bold animate-pulse">
+                                98%
+                            </div>
+                            <div>
+                                <div class="text-sm text-gray-400">Student Satisfaction</div>
+                                <div class="text-lg font-bold">Based on 5,000+ reviews</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Slider -->
+    <section id="testimonials" class="py-24">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <h2 class="font-display text-4xl md:text-5xl font-bold mb-4">Student <span class="text-gradient">Success Stories</span></h2>
+                <p class="text-gray-400 text-lg">See how Technopaedia transformed careers</p>
+            </div>
+
+            <div class="relative max-w-4xl mx-auto" data-aos="fade-up">
+                <div class="overflow-hidden" id="testimonial-container">
+                    <div class="flex transition-transform duration-500" id="testimonial-slider">
+                        <!-- Testimonials populated by JS -->
+                    </div>
+                </div>
+                
+                <div class="flex justify-center gap-4 mt-8">
+                    <button onclick="prevTestimonial()" class="w-12 h-12 rounded-full glass flex items-center justify-center text-gray-400 hover:text-white hover:border-tech-primary transition-all border border-gray-700">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <div class="flex gap-2 items-center" id="testimonial-dots"></div>
+                    <button onclick="nextTestimonial()" class="w-12 h-12 rounded-full glass flex items-center justify-center text-gray-400 hover:text-white hover:border-tech-primary transition-all border border-gray-700">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter Section -->
+    <section class="py-24 relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-r from-tech-primary/20 to-tech-secondary/20"></div>
+        <div class="absolute inset-0 bg-grid opacity-20"></div>
+        
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10" data-aos="zoom-in">
+            <h2 class="font-display text-4xl md:text-5xl font-bold mb-6">Stay <span class="text-gradient">Updated</span></h2>
+            <p class="text-xl text-gray-300 mb-8">Get the latest cloud trends, free tutorials, and exclusive discounts.</p>
+            
+            <form onsubmit="handleNewsletter(event)" class="flex flex-col sm:flex-row gap-4 max-w-lg mx-auto">
+                <input type="email" required placeholder="Enter your email" 
+                       class="flex-1 px-6 py-4 rounded-full bg-tech-darker border border-gray-700 text-white focus:border-tech-primary focus:outline-none focus:ring-2 focus:ring-tech-primary/50 transition-all">
+                <button type="submit" class="px-8 py-4 rounded-full bg-white text-tech-dark font-bold hover:shadow-xl transition-all transform hover:scale-105 flex items-center justify-center gap-2">
+                    <span id="newsletter-text">Subscribe</span>
+                    <div id="newsletter-loader" class="loader hidden"></div>
+                </button>
+            </form>
+            
+            <p class="mt-6 text-sm text-gray-400">Join 25,000+ subscribers. No spam, unsubscribe anytime.</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-tech-darker border-t border-gray-800 pt-16 pb-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-12 mb-12">
+                <div class="col-span-2">
+                    <div class="flex items-center gap-3 mb-4 cursor-pointer" onclick="window.location.href='index.html'">
+                        <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-tech-primary to-tech-secondary flex items-center justify-center">
+                            <i class="fas fa-cloud text-white text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-display font-bold text-2xl">Technopaedia</h3>
+                            <p class="text-xs text-gray-500">LTD</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 mb-6 max-w-sm">Empowering the next generation of cloud engineers and DevOps professionals with industry-leading training.</p>
+                    <div class="flex gap-4">
+                        <a href="#" class="w-10 h-10 rounded-full glass flex items-center justify-center text-gray-400 hover:text-white hover:bg-tech-primary transition-all" onclick="showToast('Twitter coming soon!', 'success')">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full glass flex items-center justify-center text-gray-400 hover:text-white hover:bg-tech-primary transition-all" onclick="showToast('LinkedIn coming soon!', 'success')">
+                            <i class="fab fa-linkedin"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full glass flex items-center justify-center text-gray-400 hover:text-white hover:bg-tech-primary transition-all" onclick="showToast('GitHub coming soon!', 'success')">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full glass flex items-center justify-center text-gray-400 hover:text-white hover:bg-tech-primary transition-all" onclick="showToast('YouTube coming soon!', 'success')">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="font-bold text-lg mb-4">Quick Links</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="index.html" class="hover:text-tech-primary transition-colors">Home</a></li>
+                        <li><a href="about.html" class="hover:text-tech-primary transition-colors">About Us</a></li>
+                        <li><a href="services.html" class="hover:text-tech-primary transition-colors">Services</a></li>
+                        <li><a href="training.html" class="hover:text-tech-primary transition-colors">Training</a></li>
+                        <li><a href="contact.html" class="hover:text-tech-primary transition-colors">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-bold text-lg mb-4">Resources</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-tech-primary transition-colors" onclick="showToast('Blog coming soon!', 'success')">Blog</a></li>
+                        <li><a href="#" class="hover:text-tech-primary transition-colors" onclick="showToast('Documentation coming soon!', 'success')">Documentation</a></li>
+                        <li><a href="#" class="hover:text-tech-primary transition-colors" onclick="showToast('Community coming soon!', 'success')">Community</a></li>
+                        <li><a href="#" class="hover:text-tech-primary transition-colors" onclick="showToast('Careers coming soon!', 'success')">Careers</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+                <p class="text-gray-500 text-sm">&copy; 2026 Technopaedia LTD. All rights reserved.</p>
+                <div class="flex gap-6 text-sm text-gray-500">
+                    <a href="#" class="hover:text-white transition-colors" onclick="showToast('Privacy Policy coming soon!', 'success')">Privacy Policy</a>
+                    <a href="#" class="hover:text-white transition-colors" onclick="showToast('Terms of Service coming soon!', 'success')">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Video Modal -->
+    <div id="video-modal" class="modal" onclick="if(event.target === this) closeVideoModal()">
+        <div class="relative w-full max-w-4xl mx-4">
+            <button onclick="closeVideoModal()" class="absolute -top-12 right-0 text-white hover:text-tech-primary transition-colors text-2xl">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="aspect-video bg-tech-dark rounded-2xl overflow-hidden border border-gray-700 flex items-center justify-center">
+                <div class="text-center">
+                    <i class="fas fa-play-circle text-6xl text-tech-primary mb-4 animate-pulse"></i>
+                    <p class="text-gray-400">Demo video loading...</p>
+                    <p class="text-sm text-gray-600 mt-2">(In production, this would embed a YouTube/Vimeo player)</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div id="toast-container"></div>
+
+    <script>
+        // Data
+        const courses = [
+            {
+                title: "AWS Solutions Architect Associate",
+                category: "Cloud Computing",
+                icon: "fab fa-aws",
+                color: "#FF9900",
+                image: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=600&h=400&fit=crop",
+                rating: 4.9,
+                students: "2.4k",
+                price: "$89",
+                bestseller: true
+            },
+            {
+                title: "DevOps Engineer Bootcamp",
+                category: "DevOps",
+                icon: "fas fa-infinity",
+                color: "#ff006e",
+                image: "https://images.unsplash.com/photo-1667372393119-c8f473882e8e?w=600&h=400&fit=crop",
+                rating: 4.8,
+                students: "1.8k",
+                price: "$129",
+                new: true
+            },
+            {
+                title: "Kubernetes Mastery",
+                category: "Containerization",
+                icon: "fas fa-dharmachakra",
+                color: "#326CE5",
+                image: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=600&h=400&fit=crop",
+                rating: 4.9,
+                students: "3.1k",
+                price: "$99"
+            }
+        ];
+
+        const testimonials = [
+            {
+                text: "The AWS course completely changed my career trajectory. Within 3 months, I landed a Cloud Engineer role with a 40% salary increase.",
+                name: "James Smith",
+                role: "Cloud Engineer @ TechCorp",
+                initials: "JS",
+                gradient: "from-tech-primary to-tech-secondary"
+            },
+            {
+                text: "The DevOps bootcamp is intense but worth every penny. The hands-on Kubernetes labs prepared me better than my 4-year CS degree.",
+                name: "Maria Chen",
+                role: "DevOps Lead @ StartupXYZ",
+                initials: "MC",
+                gradient: "from-tech-secondary to-tech-accent"
+            },
+            {
+                text: "I switched from traditional sysadmin to SRE after taking the Terraform course. The instructor's real-world examples were invaluable!",
+                name: "Alex Rodriguez",
+                role: "SRE @ CloudScale",
+                initials: "AR",
+                gradient: "from-tech-accent to-tech-primary"
+            }
+        ];
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            AOS.init({ once: true, offset: 100, duration: 800 });
+            initParticles();
+            renderFeaturedCourses();
+            renderTestimonials();
+            initCounters();
+            initTypingEffect();
+            
+            setTimeout(() => {
+                document.getElementById('progress-bar').style.width = '75%';
+                document.getElementById('progress-text').textContent = '75%';
+            }, 1000);
+        });
+
+        // Mobile Menu
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Navbar Scroll
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('shadow-lg', 'bg-tech-darker/95');
+            } else {
+                navbar.classList.remove('shadow-lg', 'bg-tech-darker/95');
+            }
+        });
+
+        // Particles
+        function initParticles() {
+            const canvas = document.getElementById('particles-canvas');
+            const ctx = canvas.getContext('2d');
+            let width, height, particles = [];
+
+            function resize() {
+                width = canvas.width = window.innerWidth;
+                height = canvas.height = window.innerHeight;
+            }
+
+            class Particle {
+                constructor() {
+                    this.x = Math.random() * width;
+                    this.y = Math.random() * height;
+                    this.vx = (Math.random() - 0.5) * 0.5;
+                    this.vy = (Math.random() - 0.5) * 0.5;
+                    this.size = Math.random() * 2;
+                }
+                update() {
+                    this.x += this.vx;
+                    this.y += this.vy;
+                    if (this.x < 0 || this.x > width) this.vx *= -1;
+                    if (this.y < 0 || this.y > height) this.vy *= -1;
+                }
+                draw() {
+                    ctx.fillStyle = 'rgba(0, 212, 255, 0.5)';
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+            }
+
+            resize();
+            for (let i = 0; i < 50; i++) particles.push(new Particle());
+
+            function animate() {
+                ctx.clearRect(0, 0, width, height);
+                particles.forEach(p => { p.update(); p.draw(); });
+                
+                particles.forEach((p1, i) => {
+                    particles.slice(i + 1).forEach(p2 => {
+                        const dx = p1.x - p2.x, dy = p1.y - p2.y;
+                        const dist = Math.sqrt(dx * dx + dy * dy);
+                        if (dist < 150) {
+                            ctx.strokeStyle = `rgba(0, 212, 255, ${0.1 * (1 - dist / 150)})`;
+                            ctx.beginPath();
+                            ctx.moveTo(p1.x, p1.y);
+                            ctx.lineTo(p2.x, p2.y);
+                            ctx.stroke();
+                        }
+                    });
+                });
+                requestAnimationFrame(animate);
+            }
+            animate();
+            window.addEventListener('resize', resize);
+        }
+
+        // Render Courses
+        function renderFeaturedCourses() {
+            const container = document.getElementById('featured-courses');
+            container.innerHTML = courses.map((course, i) => `
+                <div class="course-card glass rounded-2xl overflow-hidden border border-gray-800 cursor-pointer" 
+                     data-aos="fade-up" data-aos-delay="${(i + 1) * 100}"
+                     onclick="showToast('Opening ${course.title}...', 'success')">
+                    <div class="relative h-48 overflow-hidden">
+                        <img src="${course.image}" alt="${course.title}" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                        ${course.bestseller ? '<div class="absolute top-4 right-4 bg-tech-primary text-tech-dark text-xs font-bold px-3 py-1 rounded-full">Bestseller</div>' : ''}
+                        ${course.new ? '<div class="absolute top-4 right-4 bg-tech-accent text-white text-xs font-bold px-3 py-1 rounded-full">New</div>' : ''}
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center gap-2 mb-3">
+                            <i class="${course.icon}" style="color: ${course.color}; font-size: 1.25rem;"></i>
+                            <span class="text-sm text-gray-400">${course.category}</span>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2">${course.title}</h3>
+                        <div class="flex items-center justify-between pt-4 border-t border-gray-800">
+                            <div class="flex items-center gap-1 text-yellow-400 text-sm">
+                                <i class="fas fa-star"></i>
+                                <span class="text-white font-bold">${course.rating}</span>
+                                <span class="text-gray-500">(${course.students})</span>
+                            </div>
+                            <div class="text-tech-primary font-bold">${course.price}</div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Testimonials Slider
+        let currentTestimonial = 0;
+        function renderTestimonials() {
+            const slider = document.getElementById('testimonial-slider');
+            const dots = document.getElementById('testimonial-dots');
+            
+            slider.innerHTML = testimonials.map(t => `
+                <div class="w-full flex-shrink-0 px-4">
+                    <div class="glass p-8 rounded-2xl border border-gray-800 text-center">
+                        <div class="text-4xl mb-4 opacity-50 text-tech-primary">
+                            <i class="fas fa-quote-left"></i>
+                        </div>
+                        <p class="text-gray-300 mb-6 leading-relaxed text-lg">${t.text}</p>
+                        <div class="flex items-center justify-center gap-4">
+                            <div class="w-12 h-12 rounded-full bg-gradient-to-br ${t.gradient} flex items-center justify-center font-bold">
+                                ${t.initials}
+                            </div>
+                            <div class="text-left">
+                                <div class="font-bold">${t.name}</div>
+                                <div class="text-sm text-gray-500">${t.role}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+
+            dots.innerHTML = testimonials.map((_, i) => `
+                <button onclick="goToTestimonial(${i})" 
+                        class="w-3 h-3 rounded-full transition-all ${i === 0 ? 'bg-tech-primary w-8' : 'bg-gray-600 hover:bg-gray-400'}">
+                </button>
+            `).join('');
+        }
+
+        function updateTestimonial() {
+            const slider = document.getElementById('testimonial-slider');
+            slider.style.transform = `translateX(-${currentTestimonial * 100}%)`;
+            
+            const dots = document.querySelectorAll('#testimonial-dots button');
+            dots.forEach((dot, i) => {
+                dot.className = `w-3 h-3 rounded-full transition-all ${i === currentTestimonial ? 'bg-tech-primary w-8' : 'bg-gray-600 hover:bg-gray-400'}`;
+            });
+        }
+
+        function nextTestimonial() {
+            currentTestimonial = (currentTestimonial + 1) % testimonials.length;
+            updateTestimonial();
+        }
+
+        function prevTestimonial() {
+            currentTestimonial = (currentTestimonial - 1 + testimonials.length) % testimonials.length;
+            updateTestimonial();
+        }
+
+        function goToTestimonial(index) {
+            currentTestimonial = index;
+            updateTestimonial();
+        }
+
+        setInterval(nextTestimonial, 5000);
+
+        // Feature Accordion
+        function toggleFeature(index) {
+            const content = document.getElementById(`feature-content-${index}`);
+            const icon = document.getElementById(`feature-icon-${index}`);
+            
+            if (content.classList.contains('hidden')) {
+                content.classList.remove('hidden');
+                icon.style.transform = 'rotate(180deg)';
+            } else {
+                content.classList.add('hidden');
+                icon.style.transform = 'rotate(0deg)';
+            }
+        }
+
+        // Counters Animation
+        function initCounters() {
+            const counters = document.querySelectorAll('.counter');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const counter = entry.target;
+                        const target = parseInt(counter.getAttribute('data-target'));
+                        const suffix = counter.parentElement.textContent.includes('%') ? '%' : '+';
+                        const duration = 2000;
+                        const step = target / (duration / 16);
+                        let current = 0;
+
+                        const timer = setInterval(() => {
+                            current += step;
+                            if (current >= target) {
+                                counter.textContent = target + suffix;
+                                clearInterval(timer);
+                            } else {
+                                counter.textContent = Math.floor(current) + suffix;
+                            }
+                        }, 16);
+                        observer.unobserve(counter);
+                    }
+                });
+            });
+            counters.forEach(counter => observer.observe(counter));
+        }
+
+        // Typing Effect
+        function initTypingEffect() {
+            const words = ['Computing', 'Architecture', 'Engineering', 'Security'];
+            let i = 0;
+            const element = document.getElementById('typing-text');
+            
+            setInterval(() => {
+                element.style.opacity = 0;
+                setTimeout(() => {
+                    i = (i + 1) % words.length;
+                    element.textContent = words[i];
+                    element.style.opacity = 1;
+                }, 300);
+            }, 3000);
+        }
+
+        // Search Modal
+        function toggleSearch() {
+            const modal = document.getElementById('search-modal');
+            modal.classList.toggle('active');
+            if (modal.classList.contains('active')) {
+                setTimeout(() => document.getElementById('search-input').focus(), 100);
+            }
+        }
+
+        function handleSearch(e) {
+            const query = e.target.value.toLowerCase();
+            const results = document.getElementById('search-results');
+            
+            if (query.length < 2) {
+                results.innerHTML = '<p class="text-gray-500 text-center">Type at least 2 characters...</p>';
+                return;
+            }
+
+            const matches = [
+                ...courses.map(c => ({ type: 'Course', title: c.title, link: 'training.html' })),
+                { type: 'Page', title: 'About Us', link: 'about.html' },
+                { type: 'Page', title: 'Contact', link: 'contact.html' },
+                { type: 'Service', title: 'Corporate Training', link: 'services.html' },
+                { type: 'Service', title: 'Consulting', link: 'services.html' }
+            ].filter(item => item.title.toLowerCase().includes(query));
+
+            results.innerHTML = matches.length ? matches.map(m => `
+                <a href="${m.link}" class="flex items-center justify-between p-4 rounded-lg hover:bg-white/5 transition-colors border border-gray-800 hover:border-tech-primary/30">
+                    <div>
+                        <div class="text-sm text-tech-primary mb-1">${m.type}</div>
+                        <div class="font-medium">${m.title}</div>
+                    </div>
+                    <i class="fas fa-arrow-right text-gray-500"></i>
+                </a>
+            `).join('') : '<p class="text-gray-500 text-center">No results found</p>';
+        }
+
+        // Video Modal
+        function openVideoModal() {
+            document.getElementById('video-modal').classList.add('active');
+        }
+
+        function closeVideoModal() {
+            document.getElementById('video-modal').classList.remove('active');
+        }
+
+        // Newsletter
+        function handleNewsletter(e) {
+            e.preventDefault();
+            const btn = e.target.querySelector('button');
+            const text = document.getElementById('newsletter-text');
+            const loader = document.getElementById('newsletter-loader');
+            
+            text.classList.add('hidden');
+            loader.classList.remove('hidden');
+            
+            setTimeout(() => {
+                text.classList.remove('hidden');
+                loader.classList.add('hidden');
+                e.target.reset();
+                showToast('Successfully subscribed to newsletter!', 'success');
+            }, 1500);
+        }
+
+        // Toast Notification
+        function showToast(message, type = 'success') {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.innerHTML = `
+                <div class="flex items-center gap-3">
+                    <i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle'}"></i>
+                    <span>${message}</span>
+                </div>
+            `;
+            container.appendChild(toast);
+            
+            setTimeout(() => toast.classList.add('show'), 100);
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                document.getElementById('search-modal').classList.remove('active');
+                document.getElementById('video-modal').classList.remove('active');
+            }
+            if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+                e.preventDefault();
+                toggleSearch();
+            }
+        });
+    </script>
 </body>
 </html>

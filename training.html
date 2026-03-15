@@ -1,70 +1,807 @@
-<!doctype html>
-<html lang="en">
+<!-- training.html -->
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Training — Technopaedia</title>
-  <link rel="stylesheet" href="assets/css/styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Training & Courses | Technopaedia LTD</title>
+    <meta name="description" content="Explore our comprehensive DevOps and Cloud Computing courses. Hands-on training with industry experts.">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Space Grotesk', 'sans-serif'],
+                    },
+                    colors: {
+                        tech: {
+                            dark: '#0a0e27',
+                            darker: '#050817',
+                            primary: '#00d4ff',
+                            secondary: '#7000ff',
+                            accent: '#ff006e',
+                            success: '#00ff88',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: #0a0e27; }
+        ::-webkit-scrollbar-thumb { background: #00d4ff; border-radius: 5px; }
+        
+        .glass {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .glass-dark {
+            background: rgba(10, 14, 39, 0.9);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .text-gradient {
+            background: linear-gradient(135deg, #00d4ff 0%, #7000ff 50%, #ff006e 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-link { position: relative; }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -4px;
+            left: 0;
+            background: linear-gradient(90deg, #00d4ff, #7000ff);
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover::after { width: 100%; }
+
+        .course-card {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .course-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 212, 255, 0.15);
+        }
+
+        .filter-btn.active {
+            background: linear-gradient(135deg, #00d4ff, #7000ff);
+            color: white;
+            border-color: transparent;
+        }
+
+        .level-badge {
+            font-size: 0.75rem;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-weight: 600;
+        }
+        .level-beginner { background: rgba(0, 255, 136, 0.2); color: #00ff88; }
+        .level-intermediate { background: rgba(0, 212, 255, 0.2); color: #00d4ff; }
+        .level-advanced { background: rgba(255, 0, 110, 0.2); color: #ff006e; }
+
+        .cart-sidebar {
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+        }
+        .cart-sidebar.open {
+            transform: translateX(0);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 100;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.8);
+            backdrop-filter: blur(5px);
+        }
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
 </head>
-<body>
-  <header class="site-header">
-    <div class="container nav-row">
-      <a class="brand" href="index.html">Technopaedia</a>
-      <button id="navToggle3" class="nav-toggle" aria-expanded="false">☰</button>
-      <nav class="main-nav" id="mainNav3">
-        <a href="services.html">Services</a>
-        <a href="training.html">Training</a>
-        <a href="about.html">About</a>
-        <a href="contact.html" class="cta">Contact</a>
-      </nav>
+<body class="bg-tech-darker text-white font-sans overflow-x-hidden">
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 glass-dark transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <div class="flex-shrink-0 flex items-center gap-3 cursor-pointer" onclick="window.location.href='index.html'">
+                    <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-tech-primary to-tech-secondary flex items-center justify-center">
+                        <i class="fas fa-cloud text-white text-xl"></i>
+                    </div>
+                    <div>
+                        <h1 class="font-display font-bold text-2xl tracking-tight">Technopaedia</h1>
+                        <p class="text-xs text-gray-400 tracking-widest uppercase">LTD</p>
+                    </div>
+                </div>
+
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="index.html" class="nav-link text-gray-300 hover:text-white transition-colors text-sm font-medium">Home</a>
+                    <a href="about.html" class="nav-link text-gray-300 hover:text-white transition-colors text-sm font-medium">About</a>
+                    <a href="services.html" class="nav-link text-gray-300 hover:text-white transition-colors text-sm font-medium">Services</a>
+                    <a href="training.html" class="nav-link text-tech-primary font-medium text-sm">Training</a>
+                    <a href="contact.html" class="nav-link text-gray-300 hover:text-white transition-colors text-sm font-medium">Contact</a>
+                </div>
+
+                <div class="hidden md:flex items-center space-x-4">
+                    <button onclick="toggleCart()" class="relative text-gray-300 hover:text-white transition-colors">
+                        <i class="fas fa-shopping-cart text-xl"></i>
+                        <span id="cart-count" class="absolute -top-2 -right-2 w-5 h-5 rounded-full bg-tech-accent text-xs flex items-center justify-center font-bold hidden">0</span>
+                    </button>
+                    <a href="#courses" class="px-6 py-2.5 rounded-full bg-gradient-to-r from-tech-primary to-tech-secondary text-white font-semibold text-sm hover:shadow-lg hover:shadow-tech-primary/30 transition-all transform hover:scale-105">
+                        Browse Courses
+                    </a>
+                </div>
+
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-btn" class="text-gray-300 hover:text-white focus:outline-none">
+                        <i class="fas fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div id="mobile-menu" class="hidden md:hidden glass-dark border-t border-gray-800">
+            <div class="px-4 pt-2 pb-6 space-y-2">
+                <a href="index.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-white/5">Home</a>
+                <a href="about.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-white/5">About</a>
+                <a href="services.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-white/5">Services</a>
+                <a href="training.html" class="block px-3 py-2 rounded-md text-base font-medium text-tech-primary bg-white/5">Training</a>
+                <a href="contact.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-white/5">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Cart Sidebar -->
+    <div id="cart-sidebar" class="cart-sidebar fixed top-0 right-0 h-full w-96 bg-tech-dark border-l border-gray-800 z-50 p-6 overflow-y-auto">
+        <div class="flex justify-between items-center mb-6">
+            <h3 class="text-xl font-bold">Your Cart</h3>
+            <button onclick="toggleCart()" class="text-gray-400 hover:text-white">
+                <i class="fas fa-times text-xl"></i>
+            </button>
+        </div>
+        <div id="cart-items" class="space-y-4 mb-6">
+            <p class="text-gray-400 text-center py-8">Your cart is empty</p>
+        </div>
+        <div class="border-t border-gray-800 pt-4">
+            <div class="flex justify-between mb-4">
+                <span class="text-gray-400">Total</span>
+                <span class="text-xl font-bold" id="cart-total">$0</span>
+            </div>
+            <button onclick="checkout()" class="w-full py-3 rounded-lg bg-gradient-to-r from-tech-primary to-tech-secondary text-white font-bold hover:shadow-lg transition-all">
+                Checkout
+            </button>
+        </div>
     </div>
-  </header>
+    <div id="cart-overlay" class="fixed inset-0 bg-black/50 z-40 hidden" onclick="toggleCart()"></div>
 
-  <main class="container">
-    <h1>Training & Workshops</h1>
-    <p>Practical, hands-on courses designed for software engineers, SREs, and platform teams.</p>
-
-    <section class="courses grid-3">
-      <article class="course">
-        <h3>Intro to DevOps Practices (1 day)</h3>
-        <p>Foundations: CI/CD, infra-as-code, monitoring, and team workflows.</p>
-      </article>
-
-      <article class="course">
-        <h3>Advanced GitOps & Kubernetes (2 days)</h3>
-        <p>Hands-on GitOps pipelines, Kubernetes patterns, and observability.</p>
-      </article>
-
-      <article class="course">
-        <h3>Cloud Architectures & Cost Optimization (1 day)</h3>
-        <p>Designing resilient systems and reducing cloud spend without sacrificing reliability.</p>
-      </article>
+    <!-- Hero Section -->
+    <section class="relative pt-32 pb-20 overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-b from-tech-darker via-tech-dark to-tech-darker"></div>
+        <div class="absolute top-0 left-0 w-full h-full opacity-30">
+            <div class="absolute top-20 left-20 w-72 h-72 bg-tech-primary/20 rounded-full blur-3xl"></div>
+            <div class="absolute bottom-20 right-20 w-72 h-72 bg-tech-secondary/20 rounded-full blur-3xl"></div>
+        </div>
+        
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center max-w-3xl mx-auto" data-aos="fade-up">
+                <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass mb-6 border border-tech-primary/30">
+                    <i class="fas fa-graduation-cap text-tech-primary"></i>
+                    <span class="text-sm font-medium text-tech-primary">50+ Courses Available</span>
+                </div>
+                <h1 class="font-display text-5xl md:text-6xl font-bold mb-6">Master <span class="text-gradient">Cloud Technologies</span></h1>
+                <p class="text-xl text-gray-400 leading-relaxed mb-8">
+                    From beginner fundamentals to advanced architectures, find the perfect course to accelerate your career.
+                </p>
+                
+                <!-- Search Bar -->
+                <div class="max-w-2xl mx-auto relative">
+                    <input type="text" id="course-search" placeholder="Search courses (e.g., 'AWS', 'Kubernetes', 'DevOps')..." 
+                           class="w-full px-6 py-4 rounded-full bg-tech-dark border border-gray-700 text-white pl-14 focus:border-tech-primary focus:outline-none focus:ring-2 focus:ring-tech-primary/50 transition-all"
+                           onkeyup="filterCourses()">
+                    <i class="fas fa-search absolute left-5 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                </div>
+            </div>
+        </div>
     </section>
 
-    <section class="book">
-      <h2>Custom courses</h2>
-      <p>We tailor content and labs to your tech stack and team size. <a href="contact.html">Request a custom workshop.</a></p>
+    <!-- Filters -->
+    <section class="py-8 border-y border-gray-800 bg-tech-dark/50 sticky top-20 z-30 backdrop-blur-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-wrap items-center justify-between gap-4">
+                <div class="flex flex-wrap gap-2" id="category-filters">
+                    <button onclick="filterByCategory('all')" class="filter-btn active px-4 py-2 rounded-full glass text-sm font-medium transition-all border border-gray-700 hover:border-tech-primary/50">All Courses</button>
+                    <button onclick="filterByCategory('aws')" class="filter-btn px-4 py-2 rounded-full glass text-sm font-medium transition-all border border-gray-700 hover:border-tech-primary/50">AWS</button>
+                    <button onclick="filterByCategory('azure')" class="filter-btn px-4 py-2 rounded-full glass text-sm font-medium transition-all border border-gray-700 hover:border-tech-primary/50">Azure</button>
+                    <button onclick="filterByCategory('devops')" class="filter-btn px-4 py-2 rounded-full glass text-sm font-medium transition-all border border-gray-700 hover:border-tech-primary/50">DevOps</button>
+                    <button onclick="filterByCategory('kubernetes')" class="filter-btn px-4 py-2 rounded-full glass text-sm font-medium transition-all border border-gray-700 hover:border-tech-primary/50">Kubernetes</button>
+                    <button onclick="filterByCategory('security')" class="filter-btn px-4 py-2 rounded-full glass text-sm font-medium transition-all border border-gray-700 hover:border-tech-primary/50">Security</button>
+                </div>
+                
+                <div class="flex items-center gap-2">
+                    <span class="text-sm text-gray-400">Sort by:</span>
+                    <select id="sort-select" onchange="sortCourses()" class="bg-tech-dark border border-gray-700 rounded-lg px-3 py-2 text-sm focus:border-tech-primary focus:outline-none">
+                        <option value="popular">Most Popular</option>
+                        <option value="newest">Newest</option>
+                        <option value="price-low">Price: Low to High</option>
+                        <option value="price-high">Price: High to Low</option>
+                        <option value="rating">Highest Rated</option>
+                    </select>
+                </div>
+            </div>
+        </div>
     </section>
-  </main>
 
-  <footer class="site-footer">
-    <div class="container footer-grid">
-      <div>
-        <strong>Technopaedia</strong>
-      </div>
-      <div>
-        <nav>
-          <a href="services.html">Services</a> ·
-          <a href="training.html">Training</a> ·
-          <a href="about.html">About</a> ·
-          <a href="contact.html">Contact</a>
-        </nav>
-      </div>
-      <div>
-        <small>© <span id="year3"></span> Technopaedia</small>
-      </div>
+    <!-- Courses Grid -->
+    <section id="courses" class="py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div id="courses-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Courses populated by JS -->
+            </div>
+            
+            <div id="no-results" class="hidden text-center py-16">
+                <i class="fas fa-search text-6xl text-gray-600 mb-4"></i>
+                <h3 class="text-2xl font-bold mb-2">No courses found</h3>
+                <p class="text-gray-400">Try adjusting your search or filters</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Learning Paths -->
+    <section class="py-24 bg-tech-dark/30">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <h2 class="font-display text-4xl font-bold mb-4">Learning <span class="text-gradient">Paths</span></h2>
+                <p class="text-gray-400 text-lg">Structured curricula to take you from beginner to expert</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="glass p-8 rounded-2xl border border-gray-800 hover:border-tech-primary/30 transition-all cursor-pointer group" data-aos="fade-up" data-aos-delay="100" onclick="showPathDetail('cloud-architect')">
+                    <div class="w-16 h-16 rounded-full bg-gradient-to-br from-tech-primary to-tech-secondary flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                        <i class="fas fa-cloud text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Cloud Architect</h3>
+                    <p class="text-gray-400 mb-4">Master AWS/Azure and design scalable, cost-effective cloud infrastructure.</p>
+                    <div class="flex items-center gap-4 text-sm text-gray-500">
+                        <span><i class="fas fa-book mr-1"></i> 6 courses</span>
+                        <span><i class="fas fa-clock mr-1"></i> 120 hours</span>
+                    </div>
+                </div>
+
+                <div class="glass p-8 rounded-2xl border border-gray-800 hover:border-tech-secondary/30 transition-all cursor-pointer group" data-aos="fade-up" data-aos-delay="200" onclick="showPathDetail('devops-engineer')">
+                    <div class="w-16 h-16 rounded-full bg-gradient-to-br from-tech-secondary to-tech-accent flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                        <i class="fas fa-infinity text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">DevOps Engineer</h3>
+                    <p class="text-gray-400 mb-4">CI/CD, Infrastructure as Code, and automation mastery.</p>
+                    <div class="flex items-center gap-4 text-sm text-gray-500">
+                        <span><i class="fas fa-book mr-1"></i> 8 courses</span>
+                        <span><i class="fas fa-clock mr-1"></i> 160 hours</span>
+                    </div>
+                </div>
+
+                <div class="glass p-8 rounded-2xl border border-gray-800 hover:border-tech-accent/30 transition-all cursor-pointer group" data-aos="fade-up" data-aos-delay="300" onclick="showPathDetail('security-engineer')">
+                    <div class="w-16 h-16 rounded-full bg-gradient-to-br from-tech-accent to-tech-primary flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                        <i class="fas fa-shield-alt text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Cloud Security</h3>
+                    <p class="text-gray-400 mb-4">Secure cloud environments and DevSecOps practices.</p>
+                    <div class="flex items-center gap-4 text-sm text-gray-500">
+                        <span><i class="fas fa-book mr-1"></i> 5 courses</span>
+                        <span><i class="fas fa-clock mr-1"></i> 100 hours</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="py-24 relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-r from-tech-primary/20 to-tech-secondary/20"></div>
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10" data-aos="zoom-in">
+            <h2 class="font-display text-4xl font-bold mb-6">Not Sure Where to <span class="text-gradient">Start</span>?</h2>
+            <p class="text-xl text-gray-300 mb-8">Take our free skills assessment and get a personalized learning path recommendation.</p>
+            <button onclick="openAssessment()" class="px-8 py-4 rounded-full bg-white text-tech-dark font-bold text-lg hover:shadow-xl transition-all inline-flex items-center gap-2">
+                <i class="fas fa-clipboard-check"></i>
+                Start Assessment
+            </button>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-tech-darker border-t border-gray-800 pt-16 pb-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-12 mb-12">
+                <div class="col-span-2">
+                    <div class="flex items-center gap-3 mb-4 cursor-pointer" onclick="window.location.href='index.html'">
+                        <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-tech-primary to-tech-secondary flex items-center justify-center">
+                            <i class="fas fa-cloud text-white text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-display font-bold text-2xl">Technopaedia</h3>
+                            <p class="text-xs text-gray-500">LTD</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 mb-6 max-w-sm">World-class DevOps and Cloud Computing training for individuals and enterprises.</p>
+                </div>
+                
+                <div>
+                    <h4 class="font-bold text-lg mb-4">Courses</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-tech-primary transition-colors">AWS Certification</a></li>
+                        <li><a href="#" class="hover:text-tech-primary transition-colors">Azure Fundamentals</a></li>
+                        <li><a href="#" class="hover:text-tech-primary transition-colors">Kubernetes</a></li>
+                        <li><a href="#" class="hover:text-tech-primary transition-colors">DevOps Bootcamp</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-bold text-lg mb-4">Support</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-tech-primary transition-colors">Help Center</a></li>
+                        <li><a href="#" class="hover:text-tech-primary transition-colors">Contact Us</a></li>
+                        <li><a href="#" class="hover:text-tech-primary transition-colors">Student Login</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 pt-8 text-center">
+                <p class="text-gray-500 text-sm">&copy; 2026 Technopaedia LTD. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Course Detail Modal -->
+    <div id="course-modal" class="modal" onclick="if(event.target === this) closeCourseModal()">
+        <div class="glass w-full max-w-4xl mx-4 rounded-2xl border border-gray-700 overflow-hidden max-h-[90vh] overflow-y-auto">
+            <div id="modal-content">
+                <!-- Populated by JS -->
+            </div>
+        </div>
     </div>
-  </footer>
-  <script src="assets/js/main.js"></script>
+
+    <!-- Assessment Modal -->
+    <div id="assessment-modal" class="modal" onclick="if(event.target === this) closeAssessment()">
+        <div class="glass w-full max-w-2xl mx-4 rounded-2xl border border-gray-700 p-8">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-2xl font-bold">Skills Assessment</h3>
+                <button onclick="closeAssessment()" class="text-gray-400 hover:text-white"><i class="fas fa-times text-xl"></i></button>
+            </div>
+            <div id="assessment-content">
+                <p class="text-gray-400 mb-6">Answer a few questions to get your personalized learning path.</p>
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium mb-2">What's your current experience level?</label>
+                        <div class="grid grid-cols-3 gap-3">
+                            <button class="p-4 rounded-lg glass border border-gray-700 hover:border-tech-primary transition-colors text-center">
+                                <i class="fas fa-seedling text-tech-success text-2xl mb-2"></i>
+                                <div class="font-medium">Beginner</div>
+                            </button>
+                            <button class="p-4 rounded-lg glass border border-gray-700 hover:border-tech-primary transition-colors text-center">
+                                <i class="fas fa-layer-group text-tech-primary text-2xl mb-2"></i>
+                                <div class="font-medium">Intermediate</div>
+                            </button>
+                            <button class="p-4 rounded-lg glass border border-gray-700 hover:border-tech-primary transition-colors text-center">
+                                <i class="fas fa-rocket text-tech-accent text-2xl mb-2"></i>
+                                <div class="font-medium">Advanced</div>
+                            </button>
+                        </div>
+                    </div>
+                    <button onclick="closeAssessment(); alert('Assessment feature coming soon! Check back later.')" class="w-full py-3 rounded-lg bg-gradient-to-r from-tech-primary to-tech-secondary text-white font-bold mt-6">
+                        Continue
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Course Data
+        const coursesData = [
+            {
+                id: 1,
+                title: "AWS Solutions Architect Associate",
+                category: "aws",
+                level: "intermediate",
+                price: 89,
+                rating: 4.9,
+                students: "12.5k",
+                image: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=600&h=400&fit=crop",
+                description: "Complete preparation for the AWS SAA-C03 exam. Covers EC2, S3, VPC, RDS, and more.",
+                duration: "40 hours",
+                lectures: 120,
+                bestseller: true
+            },
+            {
+                id: 2,
+                title: "DevOps Engineer Bootcamp",
+                category: "devops",
+                level: "intermediate",
+                price: 129,
+                rating: 4.8,
+                students: "8.3k",
+                image: "https://images.unsplash.com/photo-1667372393119-c8f473882e8e?w=600&h=400&fit=crop",
+                description: "Master CI/CD, Docker, Kubernetes, Terraform, and monitoring in one comprehensive bootcamp.",
+                duration: "60 hours",
+                lectures: 180,
+                new: true
+            },
+            {
+                id: 3,
+                title: "Kubernetes Administration",
+                category: "kubernetes",
+                level: "advanced",
+                price: 99,
+                rating: 4.9,
+                students: "15.2k",
+                image: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=600&h=400&fit=crop",
+                description: "Deep dive into K8s architecture, CKA exam prep, and production cluster management.",
+                duration: "35 hours",
+                lectures: 95,
+                bestseller: true
+            },
+            {
+                id: 4,
+                title: "Azure Fundamentals AZ-900",
+                category: "azure",
+                level: "beginner",
+                price: 49,
+                rating: 4.7,
+                students: "6.7k",
+                image: "https://images.unsplash.com/photo-1563986768609-322da13575f3?w=600&h=400&fit=crop",
+                description: "Perfect starting point for Azure cloud. Covers core services, security, and pricing.",
+                duration: "20 hours",
+                lectures: 60,
+                new: true
+            },
+            {
+                id: 5,
+                title: "Docker & Containerization",
+                category: "devops",
+                level: "beginner",
+                price: 69,
+                rating: 4.8,
+                students: "9.1k",
+                image: "https://images.unsplash.com/photo-1605745341112-85968b19335b?w=600&h=400&fit=crop",
+                description: "Learn containerization from scratch. Dockerfiles, Compose, and best practices.",
+                duration: "25 hours",
+                lectures: 80,
+                bestseller: false
+            },
+            {
+                id: 6,
+                title: "Terraform & Infrastructure as Code",
+                category: "devops",
+                level: "intermediate",
+                price: 79,
+                rating: 4.9,
+                students: "7.4k",
+                image: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=600&h=400&fit=crop",
+                description: "Automate infrastructure across AWS, Azure, and GCP with Terraform.",
+                duration: "30 hours",
+                lectures: 90,
+                bestseller: false
+            },
+            {
+                id: 7,
+                title: "AWS Security Specialty",
+                category: "security",
+                level: "advanced",
+                price: 119,
+                rating: 4.8,
+                students: "3.2k",
+                image: "https://images.unsplash.com/photo-1563986768609-322da13575f3?w=600&h=400&fit=crop",
+                description: "Master encryption, IAM, and compliance for the AWS Security Specialty exam.",
+                duration: "45 hours",
+                lectures: 110,
+                bestseller: false
+            },
+            {
+                id: 8,
+                title: "GitLab CI/CD Mastery",
+                category: "devops",
+                level: "intermediate",
+                price: 59,
+                rating: 4.7,
+                students: "4.8k",
+                image: "https://images.unsplash.com/photo-1618401471353-b98afee0b2eb?w=600&h=400&fit=crop",
+                description: "Build robust CI/CD pipelines with GitLab. Includes runners, security scanning, and more.",
+                duration: "22 hours",
+                lectures: 65,
+                new: true
+            },
+            {
+                id: 9,
+                title: "Cloud Security Fundamentals",
+                category: "security",
+                level: "beginner",
+                price: 69,
+                rating: 4.6,
+                students: "5.3k",
+                image: "https://images.unsplash.com/photo-1563986768609-322da13575f3?w=600&h=400&fit=crop",
+                description: "Essential security concepts for cloud environments across all major platforms.",
+                duration: "28 hours",
+                lectures: 75,
+                bestseller: false
+            }
+        ];
+
+        let cart = [];
+        let currentFilter = 'all';
+        let currentSort = 'popular';
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            AOS.init({ once: true, offset: 100, duration: 800 });
+            renderCourses();
+        });
+
+        // Mobile Menu
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Navbar Scroll
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('shadow-lg', 'bg-tech-darker/95');
+            } else {
+                navbar.classList.remove('shadow-lg', 'bg-tech-darker/95');
+            }
+        });
+
+        // Render Courses
+        function renderCourses() {
+            const grid = document.getElementById('courses-grid');
+            const searchTerm = document.getElementById('course-search').value.toLowerCase();
+            
+            let filtered = coursesData.filter(course => {
+                const matchesCategory = currentFilter === 'all' || course.category === currentFilter;
+                const matchesSearch = course.title.toLowerCase().includes(searchTerm) || 
+                                    course.description.toLowerCase().includes(searchTerm);
+                return matchesCategory && matchesSearch;
+            });
+
+            // Sort
+            filtered.sort((a, b) => {
+                switch(currentSort) {
+                    case 'price-low': return a.price - b.price;
+                    case 'price-high': return b.price - a.price;
+                    case 'rating': return b.rating - a.rating;
+                    case 'newest': return b.id - a.id;
+                    default: return b.students.replace('k', '') - a.students.replace('k', '');
+                }
+            });
+
+            if (filtered.length === 0) {
+                grid.innerHTML = '';
+                document.getElementById('no-results').classList.remove('hidden');
+                return;
+            }
+
+            document.getElementById('no-results').classList.add('hidden');
+            
+            grid.innerHTML = filtered.map((course, index) => `
+                <div class="course-card glass rounded-2xl overflow-hidden border border-gray-800" data-aos="fade-up" data-aos-delay="${(index % 3) * 100}">
+                    <div class="relative h-48 overflow-hidden cursor-pointer" onclick="openCourseModal(${course.id})">
+                        <img src="${course.image}" alt="${course.title}" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                        ${course.bestseller ? '<div class="absolute top-4 right-4 bg-tech-primary text-tech-dark text-xs font-bold px-3 py-1 rounded-full">Bestseller</div>' : ''}
+                        ${course.new ? '<div class="absolute top-4 right-4 bg-tech-accent text-white text-xs font-bold px-3 py-1 rounded-full">New</div>' : ''}
+                        <div class="absolute top-4 left-4">
+                            <span class="level-badge level-${course.level}">${course.level.charAt(0).toUpperCase() + course.level.slice(1)}</span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-xs text-gray-500 uppercase tracking-wider">${course.category}</span>
+                            <div class="flex items-center gap-1 text-yellow-400 text-sm">
+                                <i class="fas fa-star"></i>
+                                <span class="text-white font-bold">${course.rating}</span>
+                            </div>
+                        </div>
+                        <h3 class="text-lg font-bold mb-2 line-clamp-2 cursor-pointer hover:text-tech-primary transition-colors" onclick="openCourseModal(${course.id})">${course.title}</h3>
+                        <p class="text-gray-400 text-sm mb-4 line-clamp-2">${course.description}</p>
+                        
+                        <div class="flex items-center gap-4 text-xs text-gray-500 mb-4">
+                            <span><i class="fas fa-book mr-1"></i> ${course.lectures} lectures</span>
+                            <span><i class="fas fa-clock mr-1"></i> ${course.duration}</span>
+                            <span><i class="fas fa-user mr-1"></i> ${course.students}</span>
+                        </div>
+                        
+                        <div class="flex items-center justify-between pt-4 border-t border-gray-800">
+                            <div class="text-2xl font-bold text-tech-primary">$${course.price}</div>
+                            <button onclick="addToCart(${course.id})" class="px-4 py-2 rounded-lg bg-white/10 hover:bg-tech-primary hover:text-tech-dark text-white text-sm font-semibold transition-all flex items-center gap-2">
+                                <i class="fas fa-cart-plus"></i>
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Filter Functions
+        function filterByCategory(category) {
+            currentFilter = category;
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            renderCourses();
+        }
+
+        function filterCourses() {
+            renderCourses();
+        }
+
+        function sortCourses() {
+            currentSort = document.getElementById('sort-select').value;
+            renderCourses();
+        }
+
+        // Cart Functions
+        function toggleCart() {
+            const sidebar = document.getElementById('cart-sidebar');
+            const overlay = document.getElementById('cart-overlay');
+            sidebar.classList.toggle('open');
+            overlay.classList.toggle('hidden');
+        }
+
+        function addToCart(courseId) {
+            const course = coursesData.find(c => c.id === courseId);
+            const existing = cart.find(item => item.id === courseId);
+            
+            if (existing) {
+                alert('Course already in cart!');
+                return;
+            }
+            
+            cart.push(course);
+            updateCartUI();
+            toggleCart();
+        }
+
+        function removeFromCart(courseId) {
+            cart = cart.filter(item => item.id !== courseId);
+            updateCartUI();
+        }
+
+        function updateCartUI() {
+            const cartItems = document.getElementById('cart-items');
+            const cartCount = document.getElementById('cart-count');
+            const cartTotal = document.getElementById('cart-total');
+            
+            if (cart.length === 0) {
+                cartItems.innerHTML = '<p class="text-gray-400 text-center py-8">Your cart is empty</p>';
+                cartCount.classList.add('hidden');
+            } else {
+                cartCount.textContent = cart.length;
+                cartCount.classList.remove('hidden');
+                
+                cartItems.innerHTML = cart.map(item => `
+                    <div class="flex gap-4 p-4 rounded-lg bg-tech-darker border border-gray-800">
+                        <img src="${item.image}" class="w-20 h-20 object-cover rounded-lg">
+                        <div class="flex-1">
+                            <h4 class="font-bold text-sm mb-1">${item.title}</h4>
+                            <div class="text-tech-primary font-bold">$${item.price}</div>
+                        </div>
+                        <button onclick="removeFromCart(${item.id})" class="text-gray-400 hover:text-tech-accent">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                `).join('');
+            }
+            
+            const total = cart.reduce((sum, item) => sum + item.price, 0);
+            cartTotal.textContent = '$' + total;
+        }
+
+        function checkout() {
+            if (cart.length === 0) {
+                alert('Your cart is empty!');
+                return;
+            }
+            alert('Proceeding to checkout... (In production, this would integrate with Stripe/PayPal)');
+        }
+
+        // Course Modal
+        function openCourseModal(courseId) {
+            const course = coursesData.find(c => c.id === courseId);
+            const modal = document.getElementById('course-modal');
+            const content = document.getElementById('modal-content');
+            
+            content.innerHTML = `
+                <div class="relative h-64">
+                    <img src="${course.image}" class="w-full h-full object-cover">
+                    <button onclick="closeCourseModal()" class="absolute top-4 right-4 w-10 h-10 rounded-full bg-black/50 flex items-center justify-center text-white hover:bg-black/70 transition-colors">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="p-8">
+                    <div class="flex items-center gap-3 mb-4">
+                        <span class="level-badge level-${course.level}">${course.level.charAt(0).toUpperCase() + course.level.slice(1)}</span>
+                        <span class="text-gray-400 text-sm"><i class="fas fa-star text-yellow-400 mr-1"></i> ${course.rating} (${course.students} students)</span>
+                    </div>
+                    <h2 class="text-3xl font-bold mb-4">${course.title}</h2>
+                    <p class="text-gray-400 mb-6 text-lg">${course.description}</p>
+                    
+                    <div class="grid grid-cols-3 gap-4 mb-8">
+                        <div class="glass p-4 rounded-xl text-center">
+                            <i class="fas fa-clock text-tech-primary text-2xl mb-2"></i>
+                            <div class="text-sm text-gray-400">Duration</div>
+                            <div class="font-bold">${course.duration}</div>
+                        </div>
+                        <div class="glass p-4 rounded-xl text-center">
+                            <i class="fas fa-book text-tech-secondary text-2xl mb-2"></i>
+                            <div class="text-sm text-gray-400">Lectures</div>
+                            <div class="font-bold">${course.lectures}</div>
+                        </div>
+                        <div class="glass p-4 rounded-xl text-center">
+                            <i class="fas fa-certificate text-tech-accent text-2xl mb-2"></i>
+                            <div class="text-sm text-gray-400">Certificate</div>
+                            <div class="font-bold">Yes</div>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-center justify-between pt-6 border-t border-gray-800">
+                        <div class="text-4xl font-bold text-tech-primary">$${course.price}</div>
+                        <div class="flex gap-3">
+                            <button onclick="addToCart(${course.id}); closeCourseModal();" class="px-8 py-3 rounded-lg bg-gradient-to-r from-tech-primary to-tech-secondary text-white font-bold hover:shadow-lg transition-all">
+                                Enroll Now
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            modal.classList.add('active');
+        }
+
+        function closeCourseModal() {
+            document.getElementById('course-modal').classList.remove('active');
+        }
+
+        // Assessment Modal
+        function openAssessment() {
+            document.getElementById('assessment-modal').classList.add('active');
+        }
+
+        function closeAssessment() {
+            document.getElementById('assessment-modal').classList.remove('active');
+        }
+
+        function showPathDetail(path) {
+            alert(`Learning path details for ${path} coming soon!`);
+        }
+    </script>
 </body>
 </html>

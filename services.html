@@ -1,91 +1,557 @@
-<!doctype html>
-<html lang="en">
+<!-- services.html -->
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Services — Technopaedia</title>
-  <link rel="stylesheet" href="assets/css/styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Services | Technopaedia LTD</title>
+    <meta name="description" content="Enterprise training, consulting, and staffing solutions from Technopaedia LTD.">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Space Grotesk', 'sans-serif'],
+                    },
+                    colors: {
+                        tech: {
+                            dark: '#0a0e27',
+                            darker: '#050817',
+                            primary: '#00d4ff',
+                            secondary: '#7000ff',
+                            accent: '#ff006e',
+                            success: '#00ff88',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: #0a0e27; }
+        ::-webkit-scrollbar-thumb { background: #00d4ff; border-radius: 5px; }
+        
+        .glass {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .glass-dark {
+            background: rgba(10, 14, 39, 0.9);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .text-gradient {
+            background: linear-gradient(135deg, #00d4ff 0%, #7000ff 50%, #ff006e 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-link { position: relative; }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -4px;
+            left: 0;
+            background: linear-gradient(90deg, #00d4ff, #7000ff);
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover::after { width: 100%; }
+
+        .service-card {
+            transition: all 0.4s ease;
+        }
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 212, 255, 0.1);
+        }
+
+        .pricing-card {
+            transition: all 0.3s ease;
+        }
+        .pricing-card:hover {
+            transform: scale(1.02);
+        }
+        .pricing-card.featured {
+            border-color: #00d4ff;
+            box-shadow: 0 0 30px rgba(0, 212, 255, 0.2);
+        }
+
+        .tab-btn.active {
+            background: linear-gradient(135deg, #00d4ff, #7000ff);
+            color: white;
+        }
+
+        .process-step {
+            position: relative;
+        }
+        .process-step::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            right: -50%;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(to right, #00d4ff, transparent);
+            transform: translateY(-50%);
+            z-index: 0;
+        }
+        .process-step:last-child::after {
+            display: none;
+        }
+    </style>
 </head>
-<body>
-  <header class="site-header">
-    <div class="container nav-row">
-      <a class="brand" href="index.html">Technopaedia</a>
-      <button id="navToggle2" class="nav-toggle" aria-expanded="false">☰</button>
-      <nav class="main-nav" id="mainNav2">
-        <a href="services.html">Services</a>
-        <a href="training.html">Training</a>
-        <a href="about.html">About</a>
-        <a href="contact.html" class="cta">Contact</a>
-      </nav>
-    </div>
-  </header>
+<body class="bg-tech-darker text-white font-sans overflow-x-hidden">
 
-  <main class="container">
-    <h1>Consultancy Services</h1>
-    <p>We deliver practical, measurable improvements across your engineering lifecycle.</p>
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 glass-dark transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <div class="flex-shrink-0 flex items-center gap-3 cursor-pointer" onclick="window.location.href='index.html'">
+                    <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-tech-primary to-tech-secondary flex items-center justify-center">
+                        <i class="fas fa-cloud text-white text-xl"></i>
+                    </div>
+                    <div>
+                        <h1 class="font-display font-bold text-2xl tracking-tight">Technopaedia</h1>
+                        <p class="text-xs text-gray-400 tracking-widest uppercase">LTD</p>
+                    </div>
+                </div>
 
-    <section class="service-list grid-2">
-      <article class="service">
-        <h2>Platform & Infrastructure</h2>
-        <ul>
-          <li>Cloud migration & lift-and-shift</li>
-          <li>Infrastructure as Code (Terraform/CloudFormation)</li>
-          <li>Platform engineering & managed CI/CD</li>
-        </ul>
-      </article>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="index.html" class="nav-link text-gray-300 hover:text-white transition-colors text-sm font-medium">Home</a>
+                    <a href="about.html" class="nav-link text-gray-300 hover:text-white transition-colors text-sm font-medium">About</a>
+                    <a href="services.html" class="nav-link text-tech-primary font-medium text-sm">Services</a>
+                    <a href="training.html" class="nav-link text-gray-300 hover:text-white transition-colors text-sm font-medium">Training</a>
+                    <a href="contact.html" class="nav-link text-gray-300 hover:text-white transition-colors text-sm font-medium">Contact</a>
+                </div>
 
-      <article class="service">
-        <h2>Reliability & Observability</h2>
-        <ul>
-          <li>SRE practices, SLOs & error budgets</li>
-          <li>Logging, tracing, and monitoring (Prometheus, Grafana, ELK)</li>
-          <li>Chaos engineering and resilience testing</li>
-        </ul>
-      </article>
+                <div class="hidden md:flex items-center space-x-4">
+                    <a href="contact.html" class="px-6 py-2.5 rounded-full bg-gradient-to-r from-tech-primary to-tech-secondary text-white font-semibold text-sm hover:shadow-lg hover:shadow-tech-primary/30 transition-all transform hover:scale-105">
+                        Get Quote
+                    </a>
+                </div>
 
-      <article class="service">
-        <h2>Security & Compliance</h2>
-        <ul>
-          <li>Cloud security posture reviews</li>
-          <li>IAM & least privilege design</li>
-          <li>Secrets management & automated scanning</li>
-        </ul>
-      </article>
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-btn" class="text-gray-300 hover:text-white focus:outline-none">
+                        <i class="fas fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
 
-      <article class="service">
-        <h2>Release Engineering</h2>
-        <ul>
-          <li>CI/CD pipelines, container registries</li>
-          <li>Blue/Green, Canary and Progressive Delivery patterns</li>
-          <li>Pipeline hardening and cost optimization</li>
-        </ul>
-      </article>
+        <div id="mobile-menu" class="hidden md:hidden glass-dark border-t border-gray-800">
+            <div class="px-4 pt-2 pb-6 space-y-2">
+                <a href="index.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-white/5">Home</a>
+                <a href="about.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-white/5">About</a>
+                <a href="services.html" class="block px-3 py-2 rounded-md text-base font-medium text-tech-primary bg-white/5">Services</a>
+                <a href="training.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-white/5">Training</a>
+                <a href="contact.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-white/5">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative pt-32 pb-20 overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-b from-tech-darker via-tech-dark to-tech-darker"></div>
+        <div class="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-tech-primary/5 to-transparent"></div>
+        
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center max-w-3xl mx-auto" data-aos="fade-up">
+                <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass mb-6 border border-tech-primary/30">
+                    <i class="fas fa-briefcase text-tech-primary"></i>
+                    <span class="text-sm font-medium text-tech-primary">Enterprise Solutions</span>
+                </div>
+                <h1 class="font-display text-5xl md:text-6xl font-bold mb-6">Solutions for <span class="text-gradient">Modern Teams</span></h1>
+                <p class="text-xl text-gray-400 leading-relaxed mb-8">
+                    From corporate training to cloud consulting, we help organizations build world-class technical capabilities.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <a href="#services" class="px-8 py-4 rounded-full bg-gradient-to-r from-tech-primary to-tech-secondary text-white font-bold hover:shadow-xl transition-all">
+                        Explore Services
+                    </a>
+                    <a href="contact.html" class="px-8 py-4 rounded-full glass text-white font-bold hover:bg-white/10 transition-all border border-white/20">
+                        Schedule Consultation
+                    </a>
+                </div>
+            </div>
+        </div>
     </section>
 
-    <section class="pricing-note">
-      <p>Engagements available as one-off projects, retainers, or fractional platform engineering. <a href="contact.html">Contact us</a> for a tailored proposal.</p>
-    </section>
-  </main>
+    <!-- Services Tabs -->
+    <section id="services" class="py-24 bg-tech-dark/30">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12" data-aos="fade-up">
+                <h2 class="font-display text-4xl font-bold mb-4">Our <span class="text-gradient">Services</span></h2>
+                <p class="text-gray-400 text-lg">Comprehensive solutions tailored to your needs</p>
+            </div>
 
-  <footer class="site-footer">
-    <div class="container footer-grid">
-      <div>
-        <strong>Technopaedia</strong>
-        <p>Consultancy & Training</p>
-      </div>
-      <div>
-        <nav>
-          <a href="services.html">Services</a> ·
-          <a href="training.html">Training</a> ·
-          <a href="about.html">About</a> ·
-          <a href="contact.html">Contact</a>
-        </nav>
-      </div>
-      <div>
-        <small>© <span id="year2"></span> Technopaedia</small>
-      </div>
-    </div>
-  </footer>
-  <script src="assets/js/main.js"></script>
+            <!-- Tab Buttons -->
+            <div class="flex flex-wrap justify-center gap-4 mb-12" data-aos="fade-up">
+                <button onclick="switchTab('training')" id="tab-training" class="tab-btn active px-6 py-3 rounded-full glass font-semibold transition-all">Corporate Training</button>
+                <button onclick="switchTab('consulting')" id="tab-consulting" class="tab-btn px-6 py-3 rounded-full glass font-semibold transition-all hover:border-tech-primary/50">Cloud Consulting</button>
+                <button onclick="switchTab('staffing')" id="tab-staffing" class="tab-btn px-6 py-3 rounded-full glass font-semibold transition-all hover:border-tech-primary/50">Team Augmentation</button>
+            </div>
+
+            <!-- Tab Content -->
+            <div id="content-training" class="tab-content">
+                <div class="grid lg:grid-cols-2 gap-12 items-center">
+                    <div data-aos="fade-right">
+                        <h3 class="text-3xl font-bold mb-6">Upskill Your <span class="text-gradient">Engineering Team</span></h3>
+                        <p class="text-gray-400 text-lg mb-6">Customized training programs designed to align with your technology stack and business objectives. Available onsite, virtual, or hybrid.</p>
+                        
+                        <ul class="space-y-4 mb-8">
+                            <li class="flex items-start gap-3">
+                                <i class="fas fa-check-circle text-tech-success mt-1"></i>
+                                <div>
+                                    <strong class="text-white">Custom Curriculum</strong>
+                                    <p class="text-gray-400 text-sm">Tailored to your existing infrastructure and tools</p>
+                                </div>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i class="fas fa-check-circle text-tech-success mt-1"></i>
+                                <div>
+                                    <strong class="text-white">Flexible Delivery</strong>
+                                    <p class="text-gray-400 text-sm">Week-long intensives or extended programs</p>
+                                </div>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i class="fas fa-check-circle text-tech-success mt-1"></i>
+                                <div>
+                                    <strong class="text-white">Certification Prep</strong>
+                                    <p class="text-gray-400 text-sm">Exam vouchers and practice tests included</p>
+                                </div>
+                            </li>
+                        </ul>
+
+                        <a href="contact.html" class="inline-flex items-center gap-2 text-tech-primary font-semibold hover:gap-3 transition-all">
+                            Request Custom Quote <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4" data-aos="fade-left">
+                        <div class="glass p-6 rounded-2xl border border-gray-800 text-center">
+                            <i class="fas fa-chalkboard-teacher text-4xl text-tech-primary mb-4"></i>
+                            <h4 class="font-bold mb-2">Instructor-Led</h4>
+                            <p class="text-sm text-gray-400">Live sessions with industry experts</p>
+                        </div>
+                        <div class="glass p-6 rounded-2xl border border-gray-800 text-center mt-8">
+                            <i class="fas fa-laptop-code text-4xl text-tech-secondary mb-4"></i>
+                            <h4 class="font-bold mb-2">Hands-On Labs</h4>
+                            <p class="text-sm text-gray-400">Real cloud environments</p>
+                        </div>
+                        <div class="glass p-6 rounded-2xl border border-gray-800 text-center">
+                            <i class="fas fa-chart-line text-4xl text-tech-accent mb-4"></i>
+                            <h4 class="font-bold mb-2">Progress Tracking</h4>
+                            <p class="text-sm text-gray-400">Detailed analytics & reporting</p>
+                        </div>
+                        <div class="glass p-6 rounded-2xl border border-gray-800 text-center mt-8">
+                            <i class="fas fa-certificate text-4xl text-tech-success mb-4"></i>
+                            <h4 class="font-bold mb-2">Certification</h4>
+                            <p class="text-sm text-gray-400">Industry-recognized credentials</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="content-consulting" class="tab-content hidden">
+                <div class="grid lg:grid-cols-2 gap-12 items-center">
+                    <div>
+                        <h3 class="text-3xl font-bold mb-6">Expert <span class="text-gradient">Cloud Consulting</span></h3>
+                        <p class="text-gray-400 text-lg mb-6">Strategic guidance for cloud migration, architecture design, and DevOps transformation. Our consultants have led projects at Fortune 500 companies.</p>
+                        
+                        <div class="space-y-4 mb-8">
+                            <div class="glass p-4 rounded-xl border border-gray-800 flex items-center gap-4">
+                                <div class="w-12 h-12 rounded-full bg-tech-primary/10 flex items-center justify-center">
+                                    <i class="fas fa-cloud-upload-alt text-tech-primary"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold">Cloud Migration</h4>
+                                    <p class="text-sm text-gray-400">Zero-downtime migration strategies</p>
+                                </div>
+                            </div>
+                            <div class="glass p-4 rounded-xl border border-gray-800 flex items-center gap-4">
+                                <div class="w-12 h-12 rounded-full bg-tech-secondary/10 flex items-center justify-center">
+                                    <i class="fas fa-drafting-compass text-tech-secondary"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold">Architecture Review</h4>
+                                    <p class="text-sm text-gray-400">Security & cost optimization audits</p>
+                                </div>
+                            </div>
+                            <div class="glass p-4 rounded-xl border border-gray-800 flex items-center gap-4">
+                                <div class="w-12 h-12 rounded-full bg-tech-accent/10 flex items-center justify-center">
+                                    <i class="fas fa-cogs text-tech-accent"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold">DevOps Transformation</h4>
+                                    <p class="text-sm text-gray-400">CI/CD pipeline implementation</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="glass p-8 rounded-2xl border border-gray-800">
+                        <h4 class="text-xl font-bold mb-6 text-center">Consulting Process</h4>
+                        <div class="space-y-6">
+                            <div class="flex items-center gap-4">
+                                <div class="w-10 h-10 rounded-full bg-tech-primary flex items-center justify-center font-bold">1</div>
+                                <div>
+                                    <h5 class="font-bold">Discovery</h5>
+                                    <p class="text-sm text-gray-400">Assess current state & objectives</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-4">
+                                <div class="w-10 h-10 rounded-full bg-tech-secondary flex items-center justify-center font-bold">2</div>
+                                <div>
+                                    <h5 class="font-bold">Strategy</h5>
+                                    <p class="text-sm text-gray-400">Design roadmap & architecture</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-4">
+                                <div class="w-10 h-10 rounded-full bg-tech-accent flex items-center justify-center font-bold">3</div>
+                                <div>
+                                    <h5 class="font-bold">Implementation</h5>
+                                    <p class="text-sm text-gray-400">Execute with your team</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-4">
+                                <div class="w-10 h-10 rounded-full bg-tech-success flex items-center justify-center font-bold">4</div>
+                                <div>
+                                    <h5 class="font-bold">Knowledge Transfer</h5>
+                                    <p class="text-sm text-gray-400">Train your team for autonomy</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="content-staffing" class="tab-content hidden">
+                <div class="text-center max-w-3xl mx-auto mb-12">
+                    <h3 class="text-3xl font-bold mb-6">Elite <span class="text-gradient">Cloud Talent</span> On-Demand</h3>
+                    <p class="text-gray-400 text-lg">Access our network of vetted cloud engineers, DevOps specialists, and architects. Available for contract, contract-to-hire, or permanent placement.</p>
+                </div>
+                
+                <div class="grid md:grid-cols-3 gap-8">
+                    <div class="glass p-8 rounded-2xl border border-gray-800 text-center">
+                        <div class="w-20 h-20 mx-auto mb-6 rounded-full bg-tech-primary/10 flex items-center justify-center border-2 border-tech-primary">
+                            <i class="fas fa-bolt text-tech-primary text-3xl"></i>
+                        </div>
+                        <h4 class="text-xl font-bold mb-3">Rapid Deployment</h4>
+                        <p class="text-gray-400">Qualified candidates within 48 hours. Start projects immediately without lengthy hiring processes.</p>
+                    </div>
+                    
+                    <div class="glass p-8 rounded-2xl border border-gray-800 text-center">
+                        <div class="w-20 h-20 mx-auto mb-6 rounded-full bg-tech-secondary/10 flex items-center justify-center border-2 border-tech-secondary">
+                            <i class="fas fa-user-check text-tech-secondary text-3xl"></i>
+                        </div>
+                        <h4 class="text-xl font-bold mb-3">Pre-Vetted Experts</h4>
+                        <p class="text-gray-400">Rigorous technical assessments and background checks. Only top 5% make it to our network.</p>
+                    </div>
+                    
+                    <div class="glass p-8 rounded-2xl border border-gray-800 text-center">
+                        <div class="w-20 h-20 mx-auto mb-6 rounded-full bg-tech-accent/10 flex items-center justify-center border-2 border-tech-accent">
+                            <i class="fas fa-handshake text-tech-accent text-3xl"></i>
+                        </div>
+                        <h4 class="text-xl font-bold mb-3">Risk-Free Trial</h4>
+                        <p class="text-gray-400">Not satisfied? We'll replace the candidate or refund your money. No questions asked.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section class="py-24">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <h2 class="font-display text-4xl font-bold mb-4">Transparent <span class="text-gradient">Pricing</span></h2>
+                <p class="text-gray-400 text-lg">Choose the plan that fits your organization's needs</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                <!-- Starter -->
+                <div class="pricing-card glass p-8 rounded-2xl border border-gray-800" data-aos="fade-up" data-aos-delay="100">
+                    <h3 class="text-xl font-bold mb-2">Starter</h3>
+                    <p class="text-gray-400 text-sm mb-6">For small teams getting started</p>
+                    <div class="text-4xl font-bold mb-6">$5,000<span class="text-lg text-gray-500 font-normal">/program</span></div>
+                    <ul class="space-y-3 mb-8 text-gray-300">
+                        <li class="flex items-center gap-2"><i class="fas fa-check text-tech-success text-sm"></i> Up to 10 employees</li>
+                        <li class="flex items-center gap-2"><i class="fas fa-check text-tech-success text-sm"></i> 40 hours of training</li>
+                        <li class="flex items-center gap-2"><i class="fas fa-check text-tech-success text-sm"></i> 2 courses</li>
+                        <li class="flex items-center gap-2"><i class="fas fa-check text-tech-success text-sm"></i> Online support</li>
+                        <li class="flex items-center gap-2 text-gray-600"><i class="fas fa-times text-sm"></i> Custom curriculum</li>
+                    </ul>
+                    <a href="contact.html" class="block w-full py-3 rounded-lg border border-tech-primary text-tech-primary text-center font-semibold hover:bg-tech-primary hover:text-tech-dark transition-all">Get Started</a>
+                </div>
+
+                <!-- Professional -->
+                <div class="pricing-card featured glass p-8 rounded-2xl border-2 relative" data-aos="fade-up" data-aos-delay="200">
+                    <div class="absolute -top-4 left-1/2 transform -translate-x-1/2 px-4 py-1 bg-gradient-to-r from-tech-primary to-tech-secondary rounded-full text-sm font-bold">
+                        Most Popular
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Professional</h3>
+                    <p class="text-gray-400 text-sm mb-6">For growing organizations</p>
+                    <div class="text-4xl font-bold mb-6">$15,000<span class="text-lg text-gray-500 font-normal">/program</span></div>
+                    <ul class="space-y-3 mb-8 text-gray-300">
+                        <li class="flex items-center gap-2"><i class="fas fa-check text-tech-success text-sm"></i> Up to 50 employees</li>
+                        <li class="flex items-center gap-2"><i class="fas fa-check text-tech-success text-sm"></i> 120 hours of training</li>
+                        <li class="flex items-center gap-2"><i class="fas fa-check text-tech-success text-sm"></i> 5 courses</li>
+                        <li class="flex items-center gap-2"><i class="fas fa-check text-tech-success text-sm"></i> Priority support</li>
+                        <li class="flex items-center gap-2"><i class="fas fa-check text-tech-success text-sm"></i> Custom curriculum</li>
+                    </ul>
+                    <a href="contact.html" class="block w-full py-3 rounded-lg bg-gradient-to-r from-tech-primary to-tech-secondary text-white text-center font-semibold hover:shadow-lg transition-all">Get Started</a>
+                </div>
+
+                <!-- Enterprise -->
+                <div class="pricing-card glass p-8 rounded-2xl border border-gray-800" data-aos="fade-up" data-aos-delay="300">
+                    <h3 class="text-xl font-bold mb-2">Enterprise</h3>
+                    <p class="text-gray-400 text-sm mb-6">For large-scale transformation</p>
+                    <div class="text-4xl font-bold mb-6">Custom</div>
+                    <ul class="space-y-3 mb-8 text-gray-300">
+                        <li class="flex items-center gap-2"><i class="fas fa-check text-tech-success text-sm"></i> Unlimited employees</li>
+                        <li class="flex items-center gap-2"><i class="fas fa-check text-tech-success text-sm"></i> Unlimited training hours</li>
+                        <li class="flex items-center gap-2"><i class="fas fa-check text-tech-success text-sm"></i> Full curriculum access</li>
+                        <li class="flex items-center gap-2"><i class="fas fa-check text-tech-success text-sm"></i> 24/7 dedicated support</li>
+                        <li class="flex items-center gap-2"><i class="fas fa-check text-tech-success text-sm"></i> On-site consulting</li>
+                    </ul>
+                    <a href="contact.html" class="block w-full py-3 rounded-lg border border-tech-secondary text-tech-secondary text-center font-semibold hover:bg-tech-secondary hover:text-white transition-all">Contact Sales</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Clients Section -->
+    <section class="py-24 bg-tech-dark/30">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12" data-aos="fade-up">
+                <h2 class="font-display text-3xl font-bold mb-4">Trusted by <span class="text-gradient">Industry Leaders</span></h2>
+            </div>
+            
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 opacity-60">
+                <div class="glass p-6 rounded-xl flex items-center justify-center h-24 border border-gray-800 hover:border-tech-primary/30 transition-colors">
+                    <i class="fab fa-aws text-4xl"></i>
+                </div>
+                <div class="glass p-6 rounded-xl flex items-center justify-center h-24 border border-gray-800 hover:border-tech-primary/30 transition-colors">
+                    <i class="fab fa-google text-4xl"></i>
+                </div>
+                <div class="glass p-6 rounded-xl flex items-center justify-center h-24 border border-gray-800 hover:border-tech-primary/30 transition-colors">
+                    <i class="fab fa-microsoft text-4xl"></i>
+                </div>
+                <div class="glass p-6 rounded-xl flex items-center justify-center h-24 border border-gray-800 hover:border-tech-primary/30 transition-colors">
+                    <i class="fab fa-redhat text-4xl"></i>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="py-24 relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-r from-tech-primary/20 to-tech-secondary/20"></div>
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10" data-aos="zoom-in">
+            <h2 class="font-display text-4xl font-bold mb-6">Ready to <span class="text-gradient">Transform</span> Your Team?</h2>
+            <p class="text-xl text-gray-300 mb-8">Schedule a free consultation to discuss your specific needs.</p>
+            <a href="contact.html" class="px-8 py-4 rounded-full bg-white text-tech-dark font-bold text-lg hover:shadow-xl transition-all inline-flex items-center gap-2">
+                <i class="fas fa-calendar"></i>
+                Book Consultation
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-tech-darker border-t border-gray-800 pt-16 pb-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-12 mb-12">
+                <div class="col-span-2">
+                    <div class="flex items-center gap-3 mb-4 cursor-pointer" onclick="window.location.href='index.html'">
+                        <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-tech-primary to-tech-secondary flex items-center justify-center">
+                            <i class="fas fa-cloud text-white text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-display font-bold text-2xl">Technopaedia</h3>
+                            <p class="text-xs text-gray-500">LTD</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 mb-6 max-w-sm">Enterprise cloud training and consulting solutions for the modern digital workplace.</p>
+                </div>
+                
+                <div>
+                    <h4 class="font-bold text-lg mb-4">Services</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-tech-primary transition-colors">Corporate Training</a></li>
+                        <li><a href="#" class="hover:text-tech-primary transition-colors">Cloud Consulting</a></li>
+                        <li><a href="#" class="hover:text-tech-primary transition-colors">Staffing</a></li>
+                        <li><a href="#" class="hover:text-tech-primary transition-colors">Custom Development</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-bold text-lg mb-4">Contact</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><i class="fas fa-envelope mr-2"></i> enterprise@technopaedia.com</li>
+                        <li><i class="fas fa-phone mr-2"></i> +1 (555) 123-4567</li>
+                        <li><i class="fas fa-map-marker-alt mr-2"></i> San Francisco, CA</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 pt-8 text-center">
+                <p class="text-gray-500 text-sm">&copy; 2026 Technopaedia LTD. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        AOS.init({ once: true, offset: 100, duration: 800 });
+
+        // Mobile Menu
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Navbar Scroll
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('shadow-lg', 'bg-tech-darker/95');
+            } else {
+                navbar.classList.remove('shadow-lg', 'bg-tech-darker/95');
+            }
+        });
+
+        // Tab Switching
+        function switchTab(tabName) {
+            // Hide all content
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.add('hidden');
+            });
+            
+            // Show selected content
+            document.getElementById(`content-${tabName}`).classList.remove('hidden');
+            
+            // Update buttons
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.getElementById(`tab-${tabName}`).classList.add('active');
+        }
+    </script>
 </body>
 </html>
