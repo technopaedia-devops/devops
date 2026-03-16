@@ -424,20 +424,21 @@
     <script>
         // Course Data
         const coursesData = [
-            // {
-            //     id: 1,
-            //     title: "AWS Solutions Architect Associate",
-            //     category: "aws",
-            //     level: "intermediate",
-            //     price: 89,
-            //     rating: 4.9,
-            //     students: "12.5k",
-            //     image: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=600&h=400&fit=crop",
-            //     description: "Complete preparation for the AWS SAA-C03 exam. Covers EC2, S3, VPC, RDS, and more.",
-            //     duration: "40 hours",
-            //     lectures: 120,
-            //     bestseller: true
-            // },
+            {
+                id: 1,
+                title: "AWS Solutions Architect Associate",
+                category: "aws",
+                level: "intermediate",
+                price: 89,
+                rating: 4.9,
+                students: "12.5k",
+                image: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=600&h=400&fit=crop",
+                description: "Complete preparation for the AWS SAA-C03 exam. Covers EC2, S3, VPC, RDS, and more.",
+                duration: "40 hours",
+                lectures: 120,
+                bestseller: true,
+                paymentLink: "https://buy.stripe.com/test_aws_saa_link"
+            },
             {
                 id: 2,
                 title: "DevOps Engineer Bootcamp",
@@ -450,7 +451,8 @@
                 description: "Master CI/CD, Docker, Kubernetes, Terraform, and monitoring in one comprehensive bootcamp.",
                 duration: "60 hours",
                 lectures: 180,
-                new: true
+                new: true,
+                paymentLink: "https://buy.stripe.com/test_devops_bootcamp_link"
             },
             {
                 id: 3,
@@ -464,7 +466,8 @@
                 description: "Deep dive into K8s architecture, CKA exam prep, and production cluster management.",
                 duration: "35 hours",
                 lectures: 95,
-                bestseller: true
+                bestseller: true,
+                paymentLink: "https://buy.stripe.com/test_kubernetes_admin_link"
             },
             // {
             //     id: 4,
@@ -492,7 +495,8 @@
                 description: "Learn containerization from scratch. Dockerfiles, Compose, and best practices.",
                 duration: "25 hours",
                 lectures: 80,
-                bestseller: false
+                bestseller: false,
+                paymentLink: "https://buy.stripe.com/test_docker_containerization_link"
             },
             {
                 id: 6,
@@ -506,7 +510,8 @@
                 description: "Automate infrastructure across AWS, Azure, and GCP with Terraform.",
                 duration: "30 hours",
                 lectures: 90,
-                bestseller: false
+                bestseller: false,
+                paymentLink: "https://buy.stripe.com/test_terraform_iac_link"
             },
             // {
             //     id: 7,
@@ -734,8 +739,29 @@
                 return;
             }
             
-            // Redirect to Stripe payment link
-            window.location.href = STRIPE_PAYMENT_LINK;
+            if (cart.length === 1) {
+                // Single course checkout
+                const course = cart[0];
+                if (course.paymentLink) {
+                    window.location.href = course.paymentLink;
+                } else {
+                    alert('Payment link not available for this course.');
+                }
+            } else {
+                // Multiple courses - redirect to default link or handle differently
+                alert('Multiple courses selected. Please enroll in each course separately for now.');
+                // Alternatively, redirect to a combined checkout page or default link
+                // window.location.href = STRIPE_PAYMENT_LINK;
+            }
+        }
+
+        function enrollNow(courseId) {
+            const course = coursesData.find(c => c.id === courseId);
+            if (course && course.paymentLink) {
+                window.location.href = course.paymentLink;
+            } else {
+                alert('Payment link not available for this course.');
+            }
         }
 
         // Course Modal
@@ -780,7 +806,7 @@
                     <div class="flex items-center justify-between pt-6 border-t border-gray-800">
                         <div class="text-4xl font-bold text-tech-primary">$${course.price}</div>
                         <div class="flex gap-3">
-                            <button onclick="addToCart(${course.id}); closeCourseModal();" class="px-8 py-3 rounded-lg bg-gradient-to-r from-tech-primary to-tech-secondary text-white font-bold hover:shadow-lg transition-all">
+                            <button onclick="enrollNow(${course.id}); closeCourseModal();" class="px-8 py-3 rounded-lg bg-gradient-to-r from-tech-primary to-tech-secondary text-white font-bold hover:shadow-lg transition-all">
                                 Enroll Now
                             </button>
                         </div>
