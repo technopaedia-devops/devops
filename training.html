@@ -192,7 +192,7 @@
         <div class="border-t border-gray-800 pt-4">
             <div class="flex justify-between mb-4">
                 <span class="text-gray-400">Total</span>
-                <span class="text-xl font-bold" id="cart-total">$0</span>
+                <span class="text-xl font-bold" id="cart-total">£0</span>
             </div>
             <button onclick="checkout()" class="w-full py-3 rounded-lg bg-gradient-to-r from-tech-primary to-tech-secondary text-white font-bold hover:shadow-lg transition-all">
                 Checkout
@@ -646,7 +646,7 @@
                         </div>
                         
                         <div class="flex items-center justify-between pt-4 border-t border-gray-800">
-                            <div class="text-2xl font-bold text-tech-primary">$${course.price}</div>
+                            <div class="text-2xl font-bold text-tech-primary">£${course.price}</div>
                             <button onclick="addToCart(${course.id})" class="px-4 py-2 rounded-lg bg-white/10 hover:bg-tech-primary hover:text-tech-dark text-white text-sm font-semibold transition-all flex items-center gap-2">
                                 <i class="fas fa-cart-plus"></i>
                                 Add to Cart
@@ -720,7 +720,7 @@
                         <img src="${item.image}" class="w-20 h-20 object-cover rounded-lg">
                         <div class="flex-1">
                             <h4 class="font-bold text-sm mb-1">${item.title}</h4>
-                            <div class="text-tech-primary font-bold">$${item.price}</div>
+                            <div class="text-tech-primary font-bold">£${item.price}</div>
                         </div>
                         <button onclick="removeFromCart(${item.id})" class="text-gray-400 hover:text-tech-accent">
                             <i class="fas fa-trash"></i>
@@ -730,7 +730,7 @@
             }
             
             const total = cart.reduce((sum, item) => sum + item.price, 0);
-            cartTotal.textContent = '$' + total;
+            cartTotal.textContent = '£' + total;
         }
 
         function checkout() {
@@ -804,7 +804,7 @@
                     </div>
                     
                     <div class="flex items-center justify-between pt-6 border-t border-gray-800">
-                        <div class="text-4xl font-bold text-tech-primary">$${course.price}</div>
+                        <div class="text-4xl font-bold text-tech-primary">£${course.price}</div>
                         <div class="flex gap-3">
                             <button onclick="enrollNow(${course.id}); closeCourseModal();" class="px-8 py-3 rounded-lg bg-gradient-to-r from-tech-primary to-tech-secondary text-white font-bold hover:shadow-lg transition-all">
                                 Enroll Now
