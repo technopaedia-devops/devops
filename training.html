@@ -556,6 +556,9 @@
         let currentFilter = 'all';
         let currentSort = 'popular';
 
+        // Stripe Configuration - Replace with your actual Stripe payment link
+        const STRIPE_PAYMENT_LINK = 'https://buy.stripe.com/5kQcN56eOggN1wW5vde7m00';
+
         // Initialize
         document.addEventListener('DOMContentLoaded', () => {
             AOS.init({ once: true, offset: 100, duration: 800 });
@@ -730,7 +733,9 @@
                 alert('Your cart is empty!');
                 return;
             }
-            alert('Proceeding to checkout... (In production, this would integrate with Stripe/PayPal)');
+            
+            // Redirect to Stripe payment link
+            window.location.href = STRIPE_PAYMENT_LINK;
         }
 
         // Course Modal
